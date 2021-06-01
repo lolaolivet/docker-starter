@@ -1,0 +1,2 @@
+*.pyc
+/infrastructure/docker/docker-compose.override.yml
