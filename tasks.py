@@ -1,6 +1,7 @@
 from invoke import task
 from shlex import quote
 from colorama import Fore
+from distutils.spawn import find_executable
 import json
 import os
 import re
@@ -85,9 +86,9 @@ def migrate(c):
     """
     Migrate database schema
     """
-    # with Builder(c):
-    #     docker_compose_run(c, 'php bin/console doctrine:database:create --if-not-exists')
-    #     docker_compose_run(c, 'php bin/console doctrine:migration:migrate -n --allow-no-migration')
+    with Builder(c):
+        docker_compose_run(c, 'php bin/console doctrine:database:create --if-not-exists')
+        docker_compose_run(c, 'php bin/console doctrine:migration:migrate -n --allow-no-migration')
 
 
 @task
@@ -289,3 +290,23 @@ class Builder:
 
     def __exit__(self, type, value, traceback):
         self.c.docker_compose_files = self.docker_compose_files
+
+
+@task
+def generate_certificates(c):
+    """
+    Generate SSL certificate with mkcert
+    """
+    with Builder(c):
+        if find_executable('mkcert') is None:
+            print(Fore.RED + 'You must install mkcert first')
+            return
+
+        path_caroot = c.run('mkcert -CAROOT', hide=True).stdout.strip()
+
+        if not os.path.isdir(path_caroot):
+            print(Fore.RED + 'You must have mkcert CA Root installed on your host with `mkcert -install` command')
+            return
+
+        c.run('mkcert -cert-file infrastructure/docker/services/router/etc/ssl/certs/cert.pem -key-file infrastructure/docker/services/router/etc/ssl/certs/key.pem %s "*.%s"' % (c.root_domain, c.root_domain))
+        print(Fore.GREEN + 'SSL certificate is now installed!')

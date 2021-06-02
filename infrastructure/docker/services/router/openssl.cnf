@@ -13,7 +13,7 @@ basicConstraints=CA:true
 subjectAltName = @alt_names
 
 [dn]
-CN=app.test
+CN=via-swiss.test
 
 [alt_names]
-DNS.1 = app.test
+DNS.1 = via-swiss.test

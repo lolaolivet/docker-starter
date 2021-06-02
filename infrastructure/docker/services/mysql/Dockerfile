@@ -1,0 +1,5 @@
+FROM mariadb:10.4
+
+ENV MYSQL_ROOT_PASSWORD='via-ferrata'
+
+EXPOSE 3306

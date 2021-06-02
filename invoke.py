@@ -1,5 +1,5 @@
 # This will be used to prefix all docker objects (network, images, containers)
-project_name = 'app'
+project_name = 'via-swiss'
 # This is the root domain where the app will be available
 # The "frontend" container will receive all the traffic
 root_domain = project_name + '.test'
@@ -10,7 +10,7 @@ extra_domains = []
 project_directory = 'application'
 
 # Usually, you should not edit the file above this point
-php_version = '8.0'
+php_version = '7.4'
 docker_compose_files = [
     'docker-compose.yml',
     'docker-compose.worker.yml',
