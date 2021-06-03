@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello DifficultyLevelsController!{% endblock %}
+{% block title %}Hello {{ controller_name }}!{% endblock %}
 
 {% block body %}
 <style>
@@ -9,8 +9,9 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <h1>Hello {{ controller_name }}! 🎈</h1>
 
+   <h2> {{ difficulty }} </h2>
     This friendly message is coming from:
     <ul>
         <li>Your controller at <code><a href="{{ '/home/app/application/src/Controller/DifficultyLevelsController.php'|file_link(0) }}">src/Controller/DifficultyLevelsController.php</a></code></li>

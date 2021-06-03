@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\DifficultyLevelRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=DifficultyLevelRepository::class)
@@ -19,21 +20,42 @@ class DifficultyLevel
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
      */
     private $difficulty;
 
     /**
      * @ORM\Column(type="string", length=5)
+     * @Assert\NotBlank
+     * @Assert\Length(
+     *      min = 1,
+     *      max = 5,
+     *      minMessage = "The french notation must at least have {{ limit }} charachters",
+     *      maxMessage = "The french notation cannot have more than {{ limit }} charachters"
+     * )
      */
     private $notation_fr;
 
     /**
      * @ORM\Column(type="string", length=2)
+     * @Assert\NotBlank
+     * @Assert\Length(
+     *      min = 1,
+     *      max = 2,
+     *      minMessage = "The german notation must at least have {{ limit }} charachters",
+     *      maxMessage = "The german notation cannot have more than {{ limit }} charachters"
+     * )
      */
     private $notation_de;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
+     * @Assert\Regex(
+     *      pattern = "/^#(([0-9a-fA-F]{2}){3}|([0-9a-fA-F]){3})$/",
+     *      match = true,
+     *      message = "The color must be an hexadecimal"
+     * )
      */
     private $colour;
 

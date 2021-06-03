@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\FeedbackRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=FeedbackRepository::class)
@@ -19,16 +20,26 @@ class Feedback
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\Date
+     * @var string A "DD-MM-YYYY" formatted value
      */
     private $date;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Assert\Length(
+     *      min = 0,
+     *      max = 400
+     * )
      */
     private $comment;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Assert\Range(
+     *      min = 0,
+     *      max = 5
+     * )
      */
     private $rate;
 
