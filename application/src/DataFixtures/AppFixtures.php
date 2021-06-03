@@ -8,6 +8,7 @@ use App\Entity\DifficultyLevel;
 use App\Factory\DifficultyLevelFactory;
 use App\Factory\LinesFactory;
 use App\Factory\FeedbackFactory;
+use App\Entity\FeedBack;
 
 class AppFixtures extends Fixture
 {
@@ -35,9 +36,14 @@ class AppFixtures extends Fixture
 
 // $manager
         // dd($d);
-        $f = LinesFactory::createMany(10, ['difficulty' => DifficultyLevelFactory::randomRange(1, 5)]);
+        // $f = LinesFactory::createMany(10, ['difficulty' => DifficultyLevelFactory::randomRange(1, 5)]);
         // dd($f->object);
 
+        // dd($f);
+
+        for ($i = 0; $i < 20; $i++) {
+            FeedbackFactory::createOne(['line' => LinesFactory::new()->createOne(['difficulty' => DifficultyLevelFactory::randomRange(1, 5)])->object()]);
+        }
         // $feedbacks = FeedbackFactory::createMany(20, ['line' => LinesFactory::randomRange(1, 10)->getId()]);
 
 

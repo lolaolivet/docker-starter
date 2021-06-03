@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class DifficultyLevelsController extends AbstractController
 {
     /**
-     * @Route("/difficulty/levels", name="difficulty_levels")
+     * @Route("/difficulties", name="difficulty_levels")
      */
     public function index(): Response
     {
