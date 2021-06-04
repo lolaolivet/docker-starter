@@ -3,12 +3,9 @@
 {% block title %}Hello {{line.name}} 🇨🇭!{% endblock %}
 
 {% block body %}
-<style>
-    
-</style>
 
 <div class="example-wrapper">
-    <h1>Hello {{line.name}} 🇨🇭!</h1>
+    <a class="link" href="{{path('lines')}}"><h1>Hello {{line.name}} 🇨🇭!</h1></a>
 
     <div class="difficultyRow">
         {% for d in line.difficulty %}
@@ -18,29 +15,28 @@
         {% endfor %}
     </div>
 
-<pre>
-    {{ dump(line) }}
-</pre>
+    <div class="feedbackContainer">
+
+        {% for feedback in line.feedbacks %}
+            <div class="feedbackRow">
+                <div style="width: 25%">
+                    <p>{{ feedback.date|date('d F Y') }}</p>
+                </div>
+                <div style="width: 5%">
+                    <p>{{ feedback.rate }}</p>
+                </div>
+                <div style="width: 70%">
+                    <p>{{ feedback.comment }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    {{form(form)}}
 
 <div>
     
-    <div class="feedbackContainer">
-
-        
-        {% for feedback in line.feedbacks %}
-        <div class="feedbackRow">
-            <div style="width: 25%">
-                <p>{{ feedback.date|date('d F Y') }}</p>
-            </div>
-            <div style="width: 5%">
-                <p>{{ feedback.rate }}</p>
-            </div>
-            <div style="width: 70%">
-                <p>{{ feedback.comment }}</p>
-            </div>
-        </div>
-
-        {% endfor %}
-    </div>
+    
+    
 </div>
 {% endblock %}

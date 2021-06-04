@@ -27,7 +27,6 @@
 .difficultyRow {
     width: 75%;
     display: flex;
-    flex-direction: row;
     justify-content: left;
     align-items: center;
 }
@@ -67,4 +66,13 @@
     justify-content: center;
     align-items: center;
     width: 100%;
+}
+
+.link {
+    text-decoration:  none;
+    color: black;
+}
+
+.link:hover {
+    color: darkslategray;
 }

@@ -20,8 +20,7 @@ class Feedback
 
     /**
      * @ORM\Column(type="date")
-     * @Assert\Date
-     * @var string A "DD-MM-YYYY" formatted value
+     * @Assert\Type("\DateTimeInterface")
      */
     private $date;
 

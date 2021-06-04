@@ -12,10 +12,6 @@
 
     <div data-controller="hello"></div>
 
-<pre>
-    {{ dump(lines) }}
-</pre>
-
 <div>
 <table class="table table-hover">
   <tbody>
@@ -23,7 +19,7 @@
         <tr class="lineContainer">
         <th scope="row">
             <td class="lineRow">
-                <a href="{{path('line_show', {id: line.id})}}">{{ line.name }}</a>
+                <a class="link" href="{{path('line_show', {id: line.id})}}">{{ line.name }}</a>
             </td>
             <td class="difficultyRow">
             {% for d in line.difficulty %}
