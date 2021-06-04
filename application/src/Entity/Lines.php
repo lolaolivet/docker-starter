@@ -33,9 +33,15 @@ class Lines
      */
     private $difficulty;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Feedback", mappedBy="line")
+     */
+    private $feedbacks;
+
     public function __construct()
     {
         $this->difficulty = new ArrayCollection();
+        $this->feedbacks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -75,6 +81,30 @@ class Lines
     public function removeDifficulty(DifficultyLevel $difficulty): self
     {
         $this->difficulty->removeElement($difficulty);
+
+        return $this;
+    }
+
+     /**
+     * @return Collection|Feedback[]
+     */
+    public function getFeedbacks(): Collection
+    {
+        return $this->feedbacks;
+    }
+
+    public function addFeedback(Feedback $feedback): self
+    {
+        if (!$this->feedbacks->contains($feedback)) {
+            $this->feedbacks[] = $feedback;
+        }
+
+        return $this;
+    }
+
+    public function removeFeedback(Feedback $feedback): self
+    {
+        $this->feedbacks->removeElement($feedback);
 
         return $this;
     }

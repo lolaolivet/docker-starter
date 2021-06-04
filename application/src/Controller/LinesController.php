@@ -33,15 +33,9 @@ class LinesController extends AbstractController
         $line = $this->getDoctrine()
             ->getRepository(Lines::class)
             ->find($id);
-
-        $feedbacks = $this->getDoctrine()->getRepository(Feedback::class)->findBy([
-            'line' => $id,
-        ]);
-
         
         return $this->render('line/index.html.twig', [
             'line' => $line,
-            'feedbacks' => $feedbacks
         ]);
     }
 }

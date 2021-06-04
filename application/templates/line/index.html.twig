@@ -22,7 +22,6 @@
 
 <pre>
     {{ dump(line) }}
-    {{ dump(feedbacks) }}
 </pre>
 
 <div>
@@ -30,7 +29,7 @@
     <div class="feedbackContainer">
 
         
-        {% for feedback in feedbacks %}
+        {% for feedback in line.feedbacks %}
         <div class="feedbackRow">
             <div style="width: 25%">
                 <p>{{ feedback.date|date('d F Y') }}</p>
