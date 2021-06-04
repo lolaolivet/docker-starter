@@ -1,9 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Hello {{ controller_name }}!{% endblock %}
-{% block stylesheets %}
-    <link href="{{ asset('css/main.css') }}" rel="stylesheet"/>
-{% endblock %}
+
 {% block body %}
 <style>
     
@@ -12,25 +10,33 @@
 <div class="example-wrapper">
     <h1>Hello {{ controller_name }}! 🧗🏻‍♀️</h1>
 
+    <div data-controller="hello"></div>
+
 <pre>
     {{ dump(lines) }}
 </pre>
 
 <div>
+<table class="table table-hover">
+  <tbody>
    {% for line in lines %}
-        <div class="lineContainer">
-            <div class="lineRow">
+        <tr class="lineContainer">
+        <th scope="row">
+            <td class="lineRow">
                 <a href="{{path('line_show', {id: line.id})}}">{{ line.name }}</a>
-            </div>
-            <div class="difficultyRow">
+            </td>
+            <td class="difficultyRow">
             {% for d in line.difficulty %}
                 <div class="difficulty" style="color: {{d.colour}}">
                 <p>{{ d.difficulty }}</p>
                 </div>
             {% endfor %}
-            </div>
-        </div>
+            </td>
+            </th>
+        </tr>
     {% endfor %}
+    </tbody>
+    </table>
     </div>
 </div>
 {% endblock %}
