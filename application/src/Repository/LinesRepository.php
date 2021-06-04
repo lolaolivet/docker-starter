@@ -19,6 +19,16 @@ class LinesRepository extends ServiceEntityRepository
         parent::__construct($registry, Lines::class);
     }
 
+    public function findFeedbacksById(int $value) {
+
+
+        // return $this->createQueryBuilder('l')
+        //     ->select('f.rate', 'f.date', 'f.comment')
+        //     ->from('lines', 'l')
+        //     ->innerJoin('l', 'feedbacks', 'f', 'l.id = f.line')
+        //     ->where("f.line = {$value}");
+    }
+
     // /**
     //  * @return Lines[] Returns an array of Lines objects
     //  */

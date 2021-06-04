@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello {{ controller_name }}!{% endblock %}
+{% block stylesheets %}
+    <link href="{{ asset('css/main.css') }}" rel="stylesheet"/>
+{% endblock %}
+{% block body %}
+<style>
+    
+</style>
+
+<div class="example-wrapper">
+    <h1>Hello {{ controller_name }}! 🧗🏻‍♀️</h1>
+
+<pre>
+    {{ dump(lines) }}
+</pre>
+
+<div>
+   {% for line in lines %}
+        <div class="lineContainer">
+            <div class="lineRow">
+                <a href="{{path('line_show', {id: line.id})}}">{{ line.name }}</a>
+            </div>
+            <div class="difficultyRow">
+            {% for d in line.difficulty %}
+                <div class="difficulty" style="color: {{d.colour}}">
+                <p>{{ d.difficulty }}</p>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+</div>
+{% endblock %}

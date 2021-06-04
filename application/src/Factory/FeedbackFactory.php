@@ -37,7 +37,7 @@ final class FeedbackFactory extends ModelFactory
     {
         return [
             // TODO add your default values here (https://github.com/zenstruck/foundry#model-factories)
-            'rate' => self::faker()->numberBetween(0, 5),
+            'rate' => self::faker()->numberBetween(0, 7),
             'date' => self::faker()->dateTimeThisDecade(),
             'comment' => self::faker()->paragraph(),
         ];
