@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Form\Type\LineEditType;
+use phpDocumentor\Reflection\Types\Integer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,7 +16,7 @@ use App\Repository\LinesRepository;
 class LinesController extends AbstractController
 {
 
-    private LinesRepository $linesRepository;
+    private $linesRepository;
 
     public function __construct(LinesRepository $linesRepository)
     {
@@ -27,7 +29,7 @@ class LinesController extends AbstractController
     public function index(): Response
     {
 
-        $lines = $this->getDoctrine()->getRepository(Lines::class)->findAll();
+        $lines = $this->linesRepository->findAll();
 
         return $this->render('lines/index.html.twig', [
             'controller_name' => 'LinesController',
@@ -52,27 +54,30 @@ class LinesController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // $form->getData() holds the submitted values
-            // but, the original `$task` variable has also been updated
-            $res = $form->getData();
+            $feddbackFormData = $form->getData();
 
-            // ... perform some action, such as saving the task to the database
-            // for example, if Task is a Doctrine entity, save it!
-
-            $res->setLine($line);
-
-            // var_dump($res);
-            // $res->setDate((string) $form->getData('date'));
+            $feddbackFormData->setLine($line);
 
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($res);
+            $entityManager->persist($feddbackFormData);
             $entityManager->flush();
-
-            // return $this->redirectToRoute("line/{$id}");
         }
         
         return $this->render('line/index.html.twig', [
             'line' => $line,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/line/{id}", name="line_edit")
+     */
+    public function edit(int $id): Response {
+        $line = $this->linesRepository->find($id);
+
+        $form = $this->createForm(LineEditType::class, $line);
+
+        return $this->render('line/edit.html.twig', [
             'form' => $form->createView(),
         ]);
     }

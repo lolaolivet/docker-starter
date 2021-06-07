@@ -12,18 +12,20 @@
 <table class="table table-hover">
   <tbody>
    {% for line in lines %}
-        <tr class="lineContainer">
-        <th scope="row">
-            <td class="lineRow">
-                <a class="link" href="{{path('line_show', {id: line.id})}}">{{ line.name }}</a>
-            </td>
-            <td class="difficultyRow">
-            {% for d in line.difficulty %}
-                <div class="difficulty" style="color: {{d.colour}}">
-                <p>{{ d.difficulty }}</p>
-                </div>
-            {% endfor %}
-            </td>
+            <th scope="row">
+                <td>
+                    <a class="link" href="{{path('line_show', {id: line.id})}}">{{ line.name }}</a>
+                </td>
+                <td class="difficultyRow">
+                {% for d in line.difficulty %}
+                    <div class="difficulty" style="color: {{d.colour}}">
+                        <p>{{ d.difficulty }}</p>
+                    </div>
+                {% endfor %}
+                </td>
+                <td>
+                    <a class="link" href="{{ path('line_edit', {id: line.id}) }}"><button style="margin: 0" class="btn btn-outline-warning">Edit</button></a>
+                </td>
             </th>
         </tr>
     {% endfor %}

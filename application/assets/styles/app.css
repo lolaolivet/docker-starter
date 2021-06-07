@@ -1,31 +1,17 @@
+@import "../../node_modules/bootstrap";
 
 .example-wrapper { 
     margin: 1em auto;
     max-width: 800px;
-    width: 95%;
     font: 18px/1.5 sans-serif;
 }
 
 .example-wrapper code { 
     background: #F5F5F5;
-    padding: 2px 6px; 
-}
-
-.lineContainer {
-    display: flex; 
-    flex-direction: row; 
-    align-items: center; 
-    justify-content: space-between; 
-    width: 100%; 
-    border-bottom: 1px solid gray
-}
-
-.lineRow {
-    width: 25%;
+    padding: 2px 4px;
 }
 
 .difficultyRow {
-    width: 75%;
     display: flex;
     justify-content: left;
     align-items: center;
@@ -41,7 +27,7 @@
     align-items: center; 
     justify-content: space-between; 
     width: 100%; 
-    border-bottom: 1px solid gray
+     border-bottom: 1px solid gray
 }
 
 .levelColor {
@@ -53,21 +39,11 @@
     width: 25%
 }
 
-.feedbackContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+td {
+    min-height: 70px;
+    height: 100%;
+    margin: 0;
     align-items: center;
-    border-bottom: 1px solid gray
-}
-
-.feedbackRow{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    border-bottom: 1px solid gray
 }
 
 .link {

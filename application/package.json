@@ -7,5 +7,9 @@
     "popper.js": "^1.16.1",
     "stimulus": "^2.0.0",
     "webpack-notifier": "^1.6.0"
+  },
+  "dependencies": {
+    "@popperjs/core": "^2.9.2",
+    "core-js": "^3.14.0"
   }
 }

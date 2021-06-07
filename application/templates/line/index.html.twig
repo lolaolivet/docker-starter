@@ -18,7 +18,7 @@
     <table class="table table-hover">
         <tbody>
             {% for feedback in line.feedbacks %}
-                <tr class="feedbackRow">
+                <tr>
                     <th scope="row">
                         <td style="width: 25%">
                             <p>{{ feedback.date|date('d F Y') }}</p>
@@ -26,20 +26,20 @@
                         <td style="width: 5%">
                             <p>{{ feedback.rate }}</p>
                         </td>
-                        <td style="width: 70%">
+                        <td style="width: 67%">
                             <p>{{ feedback.comment }}</p>
+                        </td>
+                        <td style="width: 3%">
+                            <button data-path="{{url('feedback_delete', {id: feedback.id}, false)}}" class="btn btn-danger feedbackDelete">x</button>
                         </td>
                     </th>
                 </tr>
+
             {% endfor %}
         </tbody>
     </table>
 
     {{form(form)}}
-
-<div>
-    
-    
-    
 </div>
+
 {% endblock %}

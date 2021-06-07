@@ -20,7 +20,7 @@ class FeedbackType extends AbstractType
             ->add('rate', RangeType::class, [
                 'attr' => [
                     'min' => 0,
-                    'max' => 6
+                    'max' => 5
                 ]
             ])
             ->add('comment', TextType::class)
