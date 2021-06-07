@@ -55,6 +55,7 @@
 
 .feedbackContainer {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid gray
@@ -66,6 +67,7 @@
     justify-content: center;
     align-items: center;
     width: 100%;
+    border-bottom: 1px solid gray
 }
 
 .link {

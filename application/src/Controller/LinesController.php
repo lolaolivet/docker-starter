@@ -9,9 +9,18 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Lines;
 use App\Entity\Feedback;
 use App\Form\Type\FeedbackType;
+use App\Repository\LinesRepository;
 
 class LinesController extends AbstractController
 {
+
+    private LinesRepository $linesRepository;
+
+    public function __construct(LinesRepository $linesRepository)
+    {
+        $this->linesRepository = $linesRepository;
+    }
+
     /**
      * @Route("/lines", name="lines")
      */
@@ -32,8 +41,7 @@ class LinesController extends AbstractController
     public function show(int $id, Request $request): Response {
     
 
-        $line = $this->getDoctrine()
-            ->getRepository(Lines::class)
+        $line = $this->linesRepository
             ->find($id);
 
         $feedback = new Feedback();
@@ -53,14 +61,14 @@ class LinesController extends AbstractController
 
             $res->setLine($line);
 
-            var_dump($res);
-            $res->setDate((string) $form->getData('date'));
+            // var_dump($res);
+            // $res->setDate((string) $form->getData('date'));
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($res);
             $entityManager->flush();
 
-            return $this->redirectToRoute("line/{$id}");
+            // return $this->redirectToRoute("line/{$id}");
         }
         
         return $this->render('line/index.html.twig', [

@@ -15,22 +15,25 @@
         {% endfor %}
     </div>
 
-    <div class="feedbackContainer">
-
-        {% for feedback in line.feedbacks %}
-            <div class="feedbackRow">
-                <div style="width: 25%">
-                    <p>{{ feedback.date|date('d F Y') }}</p>
-                </div>
-                <div style="width: 5%">
-                    <p>{{ feedback.rate }}</p>
-                </div>
-                <div style="width: 70%">
-                    <p>{{ feedback.comment }}</p>
-                </div>
-            </div>
-        {% endfor %}
-    </div>
+    <table class="table table-hover">
+        <tbody>
+            {% for feedback in line.feedbacks %}
+                <tr class="feedbackRow">
+                    <th scope="row">
+                        <td style="width: 25%">
+                            <p>{{ feedback.date|date('d F Y') }}</p>
+                        </td>
+                        <td style="width: 5%">
+                            <p>{{ feedback.rate }}</p>
+                        </td>
+                        <td style="width: 70%">
+                            <p>{{ feedback.comment }}</p>
+                        </td>
+                    </th>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
     {{form(form)}}
 
