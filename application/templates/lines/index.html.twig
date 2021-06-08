@@ -17,9 +17,9 @@
                     <a class="link" href="{{path('line_show', {id: line.id})}}">{{ line.name }}</a>
                 </td>
                 <td class="difficultyRow">
-                {% for d in line.difficulty %}
-                    <div class="difficulty" style="color: {{d.colour}}">
-                        <p>{{ d.difficulty }}</p>
+                {% for difficulty in line.difficulties %}
+                    <div class="difficulty" style="color: {{difficulty.colour}}">
+                        <p>{{ difficulty.name }}</p>
                     </div>
                 {% endfor %}
                 </td>

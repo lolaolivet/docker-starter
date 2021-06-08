@@ -34,10 +34,8 @@ class FeedbackController extends AbstractController
     /**
      * @Route("/feedback/{id}", name="feedback_delete", methods={"DELETE"})
      */
-    public function deleteFeedback(int $id): Response
+    public function deleteFeedback(Feedback $feedback): Response
     {
-        $feedback = $this->feedbackRepository->find($id);
-
         if ($feedback instanceof Feedback) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($feedback);

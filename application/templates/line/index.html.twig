@@ -8,9 +8,9 @@
     <a class="link" href="{{path('lines')}}"><h1>Hello {{line.name}} 🇨🇭!</h1></a>
 
     <div class="difficultyRow">
-        {% for d in line.difficulty %}
+        {% for difficulty in line.difficulties %}
             <div class="difficulty">
-                <p style="color: {{d.colour}}; font-size: 14px;">{{d.difficulty}}</p>
+                <p style="color: {{difficulty.colour}}; font-size: 14px;">{{difficulty.name}}</p>
             </div>
         {% endfor %}
     </div>

@@ -13,37 +13,14 @@ class DifficultyLevelsController extends AbstractController
     /**
      * @Route("/difficulties", name="difficulty_levels")
      */
-    public function index(ValidatorInterface $validator): Response
+    public function index(): Response
     {
 
-        // $difficultyLevel = new DifficultyLevel();
-        // $difficultyLevel->setDifficulty('Mega dur');
-        // $difficultyLevel->setNotationFr('MD');
-        // $difficultyLevel->setNotationDe('Z');
-        // $difficultyLevel->setColour('#000000');
-
         $difficultyLevels = $this->getDoctrine()->getRepository(DifficultyLevel::class)->findAll();
-
-        if (!$difficultyLevels) {
-            throw $this->createNotFoundExeption('NOPE'); 
-        }
-
-
-        // $errors = $validator->validate($difficultyLevel);
-        
-        // if (count($errors) > 0) {
-        //     $errorsString = (string) $errors;
-
-        //     return new Response($errorsString);
-        // }
-
-        // dd($difficultyLevels);
-
-        
 
         return $this->render('difficulty_levels/index.html.twig', [
             'controller_name' => 'DifficultyLevelsController',
             'difficulty_levels' => $difficultyLevels,
         ]);
-    }       
+    }
 }

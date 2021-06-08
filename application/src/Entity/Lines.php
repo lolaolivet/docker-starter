@@ -64,7 +64,7 @@ class Lines
     /**
      * @return Collection|DifficultyLevel[]
      */
-    public function getDifficulty(): Collection
+    public function getDifficulties(): Collection
     {
         return $this->difficulty;
     }

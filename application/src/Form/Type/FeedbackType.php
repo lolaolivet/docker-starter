@@ -16,6 +16,7 @@ class FeedbackType extends AbstractType
         $builder
             ->add('date', DateType::class, [
                 'widget' => 'single_text',
+                'data' => new \DateTime('today'),
             ])
             ->add('rate', RangeType::class, [
                 'attr' => [

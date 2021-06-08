@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Form\Type\LineEditType;
-use phpDocumentor\Reflection\Types\Integer;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,9 +18,12 @@ class LinesController extends AbstractController
 
     private $linesRepository;
 
-    public function __construct(LinesRepository $linesRepository)
+    private $entityManager;
+
+    public function __construct(LinesRepository $linesRepository, EntityManagerInterface $entityManager)
     {
         $this->linesRepository = $linesRepository;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -40,27 +43,21 @@ class LinesController extends AbstractController
     /**
      * @Route("/lines/{id}", name="line_show")
      */
-    public function show(int $id, Request $request): Response {
-    
-
-        $line = $this->linesRepository
-            ->find($id);
+    public function show(Lines $line, Request $request): Response {
 
         $feedback = new Feedback();
-        $feedback->setDate(new \DateTime('today'));
-
         $form = $this->createForm(FeedbackType::class, $feedback);
-        
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $feddbackFormData = $form->getData();
+            $feedbackFormData = $form->getData();
+            $feedbackFormData->setLine($line);
 
-            $feddbackFormData->setLine($line);
+            $this->entityManager->persist($feedbackFormData);
+            $this->entityManager->flush();
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($feddbackFormData);
-            $entityManager->flush();
+            $feedback = new Feedback();
+            $form = $this->createForm(FeedbackType::class, $feedback);
         }
         
         return $this->render('line/index.html.twig', [
@@ -72,10 +69,23 @@ class LinesController extends AbstractController
     /**
      * @Route("/line/{id}", name="line_edit")
      */
-    public function edit(int $id): Response {
-        $line = $this->linesRepository->find($id);
+    public function edit(Lines $line, Request $request): Response {
 
-        $form = $this->createForm(LineEditType::class, $line);
+        $form = $this->createForm(LineEditType::class, $line, ['data' => $line]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $lineFormData = $form->getData();
+            $difficulties = $line->getDifficulties();
+
+            foreach ($difficulties as $difficulty) {
+                $lineFormData->addDifficulty($difficulty);
+            }
+
+            $this->entityManager->persist($lineFormData);
+            $this->entityManager->flush();
+        }
 
         return $this->render('line/edit.html.twig', [
             'form' => $form->createView(),

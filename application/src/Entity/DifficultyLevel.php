@@ -22,7 +22,7 @@ class DifficultyLevel
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank
      */
-    private $difficulty;
+    private $name;
 
     /**
      * @ORM\Column(type="string", length=5)
@@ -64,14 +64,14 @@ class DifficultyLevel
         return $this->id;
     }
 
-    public function getDifficulty(): ?string
+    public function getName(): ?string
     {
-        return $this->difficulty;
+        return $this->name;
     }
 
-    public function setDifficulty(string $difficulty): self
+    public function setName(string $difficulty): self
     {
-        $this->difficulty = $difficulty;
+        $this->name = $difficulty;
 
         return $this;
     }

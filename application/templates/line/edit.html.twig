@@ -3,9 +3,11 @@
 {% block title %}Edit ✏️{% endblock %}
 
 {% block body %}
-<div class="lineEdit">
-    <h1>Edit ✏️ !</h1>
-
-    {{ form(form) }}
+<div class="example-wrapper">
+    <div class="lineEdit">
+        <a class="link" href="{{ path('lines') }}"><h1>Edit ✏️ !</h1></a>
+        <br/>
+        {{ form(form) }}
+    </div>
 </div>
 {% endblock %}
