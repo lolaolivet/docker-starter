@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\DifficultyLevelRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -21,6 +22,7 @@ class DifficultyLevel
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank
+     * @Groups({"show_line"})
      */
     private $name;
 
@@ -33,6 +35,7 @@ class DifficultyLevel
      *      minMessage = "The french notation must at least have {{ limit }} charachters",
      *      maxMessage = "The french notation cannot have more than {{ limit }} charachters"
      * )
+     *  @Groups({"show_line"})
      */
     private $notation_fr;
 
@@ -69,9 +72,9 @@ class DifficultyLevel
         return $this->name;
     }
 
-    public function setName(string $difficulty): self
+    public function setName(string $name): self
     {
-        $this->name = $difficulty;
+        $this->name = $name;
 
         return $this;
     }

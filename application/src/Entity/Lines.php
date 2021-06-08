@@ -6,6 +6,8 @@ use App\Repository\LinesRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\Ignore;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -18,6 +20,7 @@ class Lines
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"list_lines", "show_line"})
      */
     private $id;
 
@@ -25,22 +28,25 @@ class Lines
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank
      * @Assert\Length(max=255)
+     * @Groups({"list_lines", "show_line"})
      */
     private $name;
 
     /**
      * @ORM\ManyToMany(targetEntity=DifficultyLevel::class)
+     * @Groups({"show_line"})
      */
-    private $difficulty;
+    private $difficulties;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Feedback", mappedBy="line")
+     * @Groups({"show_line"})
      */
     private $feedbacks;
 
     public function __construct()
     {
-        $this->difficulty = new ArrayCollection();
+        $this->difficulties = new ArrayCollection();
         $this->feedbacks = new ArrayCollection();
     }
 
@@ -66,13 +72,13 @@ class Lines
      */
     public function getDifficulties(): Collection
     {
-        return $this->difficulty;
+        return $this->difficulties;
     }
 
     public function addDifficulty(DifficultyLevel $difficulty): self
     {
-        if (!$this->difficulty->contains($difficulty)) {
-            $this->difficulty[] = $difficulty;
+        if (!$this->difficulties->contains($difficulty)) {
+            $this->difficulties[] = $difficulty;
         }
 
         return $this;
@@ -80,7 +86,7 @@ class Lines
 
     public function removeDifficulty(DifficultyLevel $difficulty): self
     {
-        $this->difficulty->removeElement($difficulty);
+        $this->difficulties->removeElement($difficulty);
 
         return $this;
     }

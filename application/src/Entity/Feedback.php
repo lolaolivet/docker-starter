@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\FeedbackRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\Ignore;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -30,6 +32,7 @@ class Feedback
      *      min = 0,
      *      max = 400
      * )
+     *  @Groups({"show_line"})
      */
     private $comment;
 
@@ -39,6 +42,7 @@ class Feedback
      *      min = 0,
      *      max = 5
      * )
+     *  @Groups({"show_line"})
      */
     private $rate;
 

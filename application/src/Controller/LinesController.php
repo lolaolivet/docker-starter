@@ -12,6 +12,7 @@ use App\Entity\Lines;
 use App\Entity\Feedback;
 use App\Form\Type\FeedbackType;
 use App\Repository\LinesRepository;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class LinesController extends AbstractController
 {
