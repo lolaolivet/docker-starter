@@ -27,7 +27,10 @@ class Lines
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank
-     * @Assert\Length(max=255)
+     * @Assert\Length(
+     *      min = 1,
+     *      max = 255
+     * )
      * @Groups({"list_lines", "show_line"})
      */
     private $name;

@@ -54,35 +54,67 @@ class LinesApiController extends AbstractController
     /**
      * @Route("/lines", name="api_create_lines", methods={"POST"})
      */
-    public function create(Request $request, SerializerInterface $serializer): Response
+    public function create(Request $request, SerializerInterface $serializer, ValidatorInterface $validator): Response
     {
 
         $data = $serializer->deserialize($request->getContent(), Lines::class, 'json');
 
-        try {
-            $line = new Lines();
-            $difficulties = $data->getDifficulties();
+        $line = new Lines();
+        $difficulties = $data->getDifficulties();
 
-            foreach ($difficulties as $difficulty)
-            {
-                $line->addDifficulty($this->difficultyLevelRepository->findOneBy(['name' => $difficulty->getName()]));
-            }
-
-            $this->entityManager->persist($line);
-            $this->entityManager->flush();
-            return $this->json('OK', 200, []);
-
-
-        } catch(\Exception $e){
-            $errorMessage = $e->getMessage();
-            return $this->json(['message' => $errorMessage], 400, []);
+        foreach ($difficulties as $difficulty) {
+            $line->addDifficulty($this->difficultyLevelRepository->findOneBy(['name' => $difficulty->getName()]));
         }
 
+        $errors = $validator->validate($line);
 
+        if (count($errors) > 0) {
 
+            $errorsString = (string) $errors;
 
+            return $this->json(['message' => $errorsString], 400, []);
 
+        } else {
+            $this->entityManager->persist($line);
+            $this->entityManager->flush();
+            return $this->json(['message' => 'OK'], 200, []);
 
+        }
+    }
+
+    /**
+     * @Route("/lines/{id}", name="api_update_line", methods={"PUT"})
+     */
+    public function update(Lines $line, Request $request, SerializerInterface $serializer, ValidatorInterface  $validator): Response
+    {
+        $data = $serializer->deserialize($request->getContent(), Lines::class, 'json');
+        $name = $data->getname();
+        $difficulties = $data->getDifficulties();
+
+        $line->setName($name);
+
+        foreach ($difficulties as $difficulty) {
+            $difficulty_exists = $this->difficultyLevelRepository->findOneBy(['name' => $difficulty->getName()]);
+            if (!$difficulty_exists) {
+                return $this->json(['message' => 'This difficulty ('.$difficulty->getName().') does not exists'], 404, []);
+
+            } else {
+                $line->addDifficulty($difficulty_exists);
+            }
+        }
+
+        $errors = $validator->validate($line);
+
+        if (count($errors) > 0) {
+
+            $errorsString = (string) $errors;
+
+            return $this->json(['message' => $errorsString], 400, []);
+
+        } else {
+            $this->entityManager->flush();
+            return $this->json(['message' => "OK"], 200, []);
+        }
     }
 
 }
