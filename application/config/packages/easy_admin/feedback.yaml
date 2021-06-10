@@ -1,0 +1,4 @@
+easy_admin:
+  entities:
+    Feedback:
+      class: App\Entity\Feedback

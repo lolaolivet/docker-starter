@@ -1,0 +1,4 @@
+easy_admin:
+  entities:
+    Lines:
+      class: App\Entity\Lines
