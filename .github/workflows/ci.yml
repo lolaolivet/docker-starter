@@ -60,22 +60,22 @@ jobs:
                 run: |
                     set -e
                     set -o pipefail
-                    curl --fail --insecure --silent -H "Host: app.test" https://via-swiss.test | grep "Hello world"
-            -
-                name: 'Test communication with DB'
-                run: |
-                    set -e
-                    set -o pipefail
-
-                    # Need to mount (replace the old one) the new directories layout to the web container
-                    pipenv run inv up
-
-                    cat > application/public/index.php <<'EOPHP'
-                    <?php
-                    $pdo = new PDO('pgsql:host=postgres;dbname=app', 'app', 'app');
-                    $pdo->exec('CREATE TABLE test (id integer NOT NULL)');
-                    $pdo->exec('INSERT INTO test VALUES (1)');
-                    echo $pdo->query('SELECT * from test')->fetchAll() ? 'database OK' : 'database KO';
-                    EOPHP
-
-                    curl --fail --insecure --silent -H "Host: app.test" https://via-swiss.test | grep "database OK"
+                    curl --fail --insecure --silent -H "Host: via-swiss.test" https://127.0.0.1 | grep "Hello LinesController"
+#            -
+#                name: 'Test communication with DB'
+#                run: |
+#                    set -e
+#                    set -o pipefail
+#
+#                    # Need to mount (replace the old one) the new directories layout to the web container
+#                    pipenv run inv up
+#
+#                    cat > application/public/index.php <<'EOPHP'
+#                    <?php
+#                    $pdo = new PDO('pgsql:host=postgres;dbname=app', 'app', 'app');
+#                    $pdo->exec('CREATE TABLE test (id integer NOT NULL)');
+#                    $pdo->exec('INSERT INTO test VALUES (1)');
+#                    echo $pdo->query('SELECT * from test')->fetchAll() ? 'database OK' : 'database KO';
+#                    EOPHP
+#
+#                    curl --fail --insecure --silent -H "Host: app.test" https://127.0.0.1 | grep "database OK"
