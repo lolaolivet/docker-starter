@@ -88,31 +88,29 @@ class LinesApiController extends AbstractController
     public function update(Lines $line, Request $request, SerializerInterface $serializer, ValidatorInterface  $validator): Response
     {
         $data = $serializer->deserialize($request->getContent(), Lines::class, 'json');
-        $name = $data->getname();
+        $name = $data->getName();
         $difficulties = $data->getDifficulties();
 
         $line->setName($name);
 
         foreach ($difficulties as $difficulty) {
-            $difficulty_exists = $this->difficultyLevelRepository->findOneBy(['name' => $difficulty->getName()]);
-            if (!$difficulty_exists) {
+            $difficulty_level = $this->difficultyLevelRepository->findOneBy(['name' => $difficulty->getName()]);
+            if (!$difficulty_level) {
                 return $this->json(['message' => 'This difficulty ('.$difficulty->getName().') does not exists'], 404, []);
-
-            } else {
-                $line->addDifficulty($difficulty_exists);
             }
+            $line->addDifficulty($difficulty_level);
         }
 
         $errors = $validator->validate($line);
 
         if (count($errors) > 0) {
-
             $errorsString = (string) $errors;
 
             return $this->json(['message' => $errorsString], 400, []);
-
         } else {
+            $this->entityManager->persist($line);
             $this->entityManager->flush();
+
             return $this->json(['message' => "OK"], 200, []);
         }
     }

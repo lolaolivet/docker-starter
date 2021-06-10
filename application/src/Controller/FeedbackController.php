@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\FeedbackRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -11,10 +12,13 @@ use App\Entity\Feedback;
 
 class FeedbackController extends AbstractController
 {
-    private $feedbackRepository;
+    private FeedbackRepository $feedbackRepository;
 
-    public function __construct(FeedbackRepository $feedbackRepository) {
+    private EntityManagerInterface $entityManager;
+
+    public function __construct(FeedbackRepository $feedbackRepository, EntityManagerInterface $entityManager) {
         $this->feedbackRepository = $feedbackRepository;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -23,7 +27,7 @@ class FeedbackController extends AbstractController
     public function index(): Response
     {
 
-        $feedbacks = $this->getDoctrine()->getRepository(Feedback::class)->findAll();
+        $feedbacks = $this->feedbackRepository->findAll();
 
         return $this->render('feedback/index.html.twig', [
             'controller_name' => 'FeedbackController',
@@ -37,13 +41,11 @@ class FeedbackController extends AbstractController
     public function deleteFeedback(Feedback $feedback): Response
     {
         if ($feedback instanceof Feedback) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($feedback);
-            $entityManager->flush();
-            return $this->json(['response' => 'OK']);
-        } else {
-            throw new BadRequestHttpException('Message', null, 404);
+            $this->entityManager->remove($feedback);
+            $this->entityManager->flush();
+            return $this->json(['message' => 'OK'], 200, []);
         }
+        return $this->json(['message' => 'This feedback does not exists'],  404, []);
 
     }
 }

@@ -17,9 +17,9 @@ use Symfony\Component\Serializer\SerializerInterface;
 class LinesController extends AbstractController
 {
 
-    private $linesRepository;
+    private LinesRepository $linesRepository;
 
-    private $entityManager;
+    private EntityManagerInterface $entityManager;
 
     public function __construct(LinesRepository $linesRepository, EntityManagerInterface $entityManager)
     {
