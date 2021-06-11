@@ -8,6 +8,8 @@ easy_admin:
     assets:
       css:
         - 'css/admin.css'
+      js:
+        - 'js/admin.js'
   list:
     actions:
       - { name: 'show', icon: 'eye' }

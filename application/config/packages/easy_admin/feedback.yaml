@@ -2,3 +2,10 @@ easy_admin:
   entities:
     Feedback:
       class: App\Entity\Feedback
+      list:
+        fields:
+          - { property: 'id' }
+          - { property: 'date', type: 'date' }
+          - { property: 'rate', template: 'easy_admin/Feedback/rate.html.twig' }
+          - { property: 'comment' }
+          - { property: 'line'}

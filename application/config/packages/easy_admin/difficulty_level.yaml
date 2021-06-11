@@ -3,8 +3,9 @@ easy_admin:
     DifficultyLevel:
       class: App\Entity\DifficultyLevel
       list:
+        title: '%%entity_name%% listing'
         fields:
           - { property: 'name', type: 'text' }
           - { property: 'notation_fr', type: 'text' }
           - { property: 'notation_de', type: 'text' }
-          - { property: 'colour', css_class: 'level-color' }
+          - { property: 'colour', template: 'easy_admin/DifficultyLevel/color.html.twig'}
