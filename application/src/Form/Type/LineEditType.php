@@ -24,7 +24,6 @@ class LineEditType extends AbstractType
                 'choice_label' => 'name',
                 'expanded' => true,
                 'multiple' => true,
-//                'data' => $line->getDifficulties()
             ])
             ->add('save', SubmitType::class, ['label' => 'Edit'])
             ->getForm();

@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\DifficultyLevel;
@@ -14,38 +15,18 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-        // $product = new Product();
-        // $manager->persist($product);
 
-        // $difficultyLevel = new DifficultyLevel();
-        // $difficultyLevel->setDifficulty('Facile');
-        // $difficultyLevel->setNotationFr('F');
-        // $difficultyLevel->setNotationDe('A');
-        // $difficultyLevel->setColour('#34e5eb');
-        // $manager->persist($difficultyLevel);
+//        $d = DifficultyLevelFactory::createMany(6);
+//
+//        for ($i = 0; $i < 20; $i++) {
+//            FeedbackFactory::createOne(['line' => LinesFactory::new()->createOne(['difficulty' => DifficultyLevelFactory::randomRange(1, 5)])->object()]);
+//        }
 
-        // $difficultyLevel2 = new DifficultyLevel();
-        // $difficultyLevel2->setDifficulty('Difficile');
-        // $difficultyLevel2->setNotationFr('D');
-        // $difficultyLevel2->setNotationDe('D');
-        // $difficultyLevel2->setColour('#eb345c');
-        // $manager->persist($difficultyLevel2);
+        $user = new User();
 
-        $d = DifficultyLevelFactory::createMany(6);
-
-
-// $manager
-        // dd($d);
-        // $f = LinesFactory::createMany(10, ['difficulty' => DifficultyLevelFactory::randomRange(1, 5)]);
-        // dd($f->object);
-
-        // dd($f);
-
-        for ($i = 0; $i < 20; $i++) {
-            FeedbackFactory::createOne(['line' => LinesFactory::new()->createOne(['difficulty' => DifficultyLevelFactory::randomRange(1, 5)])->object()]);
-        }
-        // $feedbacks = FeedbackFactory::createMany(20, ['line' => LinesFactory::randomRange(1, 10)->getId()]);
-
+        $user->setUsername('Admin');
+        $user->setPassword('root');
+        $user->setRoles(['ROLE_USER','ROLE_ADMIN']);
 
         $manager->flush();
     }
