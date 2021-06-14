@@ -22,20 +22,6 @@ class FeedbackController extends AbstractController
     }
 
     /**
-     * @Route("/feedback", name="feedback")
-     */
-    public function index(): Response
-    {
-
-        $feedbacks = $this->feedbackRepository->findAll();
-
-        return $this->render('feedback/index.html.twig', [
-            'controller_name' => 'FeedbackController',
-            'feedbacks' => $feedbacks,
-        ]);
-    }
-
-    /**
      * @Route("/feedback/{id}", name="feedback_delete", methods={"DELETE"})
      */
     public function deleteFeedback(Feedback $feedback): Response

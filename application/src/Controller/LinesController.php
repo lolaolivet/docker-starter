@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Form\Type\LineEditType;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -69,6 +70,7 @@ class LinesController extends AbstractController
 
     /**
      * @Route("/line/{id}", name="line_edit")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function edit(Lines $line, Request $request): Response {
 

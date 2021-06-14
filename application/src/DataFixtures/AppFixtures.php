@@ -10,23 +10,40 @@ use App\Factory\DifficultyLevelFactory;
 use App\Factory\LinesFactory;
 use App\Factory\FeedbackFactory;
 use App\Entity\FeedBack;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
+    private $passwordHasher;
+
+    public function __construct(UserPasswordHasherInterface $passwordHasher)
+    {
+        $this->passwordHasher = $passwordHasher;
+    }
+
     public function load(ObjectManager $manager)
     {
 
-//        $d = DifficultyLevelFactory::createMany(6);
-//
-//        for ($i = 0; $i < 20; $i++) {
-//            FeedbackFactory::createOne(['line' => LinesFactory::new()->createOne(['difficulty' => DifficultyLevelFactory::randomRange(1, 5)])->object()]);
-//        }
+        $d = DifficultyLevelFactory::createMany(6);
+
+        for ($i = 0; $i < 20; $i++) {
+            FeedbackFactory::createOne(['line' => LinesFactory::new()->createOne(['difficulties' => DifficultyLevelFactory::randomRange(1, 5)])->object()]);
+        }
+
+        $user_admin = new User();
+
+        $user_admin->setUsername('Admin');
+        $user_admin->setPassword($this->passwordHasher->hashPassword($user_admin, 'root'));
+        $user_admin->setRoles(['ROLE_USER','ROLE_ADMIN']);
+        $manager->persist($user_admin);
 
         $user = new User();
 
-        $user->setUsername('Admin');
-        $user->setPassword('root');
-        $user->setRoles(['ROLE_USER','ROLE_ADMIN']);
+        $user->setUsername('Lola');
+        $user->setPassword($this->passwordHasher->hashPassword($user, 'Lola'));
+        $user->setRoles(['ROLE_USER']);
+        $manager->persist($user);
+
 
         $manager->flush();
     }

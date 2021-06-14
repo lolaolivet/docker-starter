@@ -23,9 +23,11 @@
                     </div>
                 {% endfor %}
                 </td>
-                <td>
-                    <a class="link" href="{{ path('line_edit', {id: line.id}) }}"><button style="margin: 0" class="btn btn-outline-warning">Edit</button></a>
-                </td>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <td>
+                        <a class="link" href="{{ path('line_edit', {id: line.id}) }}"><button style="margin: 0" class="btn btn-outline-warning">Edit</button></a>
+                    </td>
+                {% endif %}
             </th>
         </tr>
     {% endfor %}
