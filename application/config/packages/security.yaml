@@ -8,21 +8,27 @@ security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         # used to reload user from session & other features (e.g. switch_user)
-        app_user_provider:
+        your_db_provider:
             entity:
                 class: App\Entity\User
-                property: username
+                property: apiToken
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
+            form_login: ~
+            http_basic: ~
+            entry_point: form_login
             lazy: true
-            provider: app_user_provider
-            custom_authenticator: App\Security\LoginFormAuthenticator
-            logout:
-                path: app_logout
-                target: lines
+            logout: ~
+            custom_authenticators:
+                - App\Security\ApiKeyAuthenticator
+
+#            provider: app_user_provider
+#            custom_authenticator: App\Security\LoginFormAuthenticator
+#                path: app_logout
+#                target: lines
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
