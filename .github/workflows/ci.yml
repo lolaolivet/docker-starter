@@ -56,14 +56,15 @@ jobs:
             -
                 run: 'pipenv run inv start && sleep 5'
             -
+                run: 'ls'
+            -
                 name: 'Test the infrastructure is working'
                 run: |
                     set -e
                     set -o pipefail
                     curl --fail --insecure -H "Host: via-swiss.test" https://127.0.0.1/lines | grep "Hello LinesController"
 
-            -
-                run: 'ls'
+
 #            -
 #                name: 'Test communication with DB'
 #                run: |
