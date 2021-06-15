@@ -60,7 +60,7 @@ jobs:
                 run: |
                     set -e
                     set -o pipefail
-                    curl --fail --insecure --silent -H "Host: via-swiss.test" https://127.0.0.1/lines | grep "Hello LinesController"
+                    curl --fail --insecure -H "Host: via-swiss.test" https://127.0.0.1/lines | grep "Hello LinesController"
 #            -
 #                name: 'Test communication with DB'
 #                run: |
