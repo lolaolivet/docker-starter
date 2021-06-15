@@ -60,7 +60,7 @@ jobs:
             -
                 name: 'Test the infrastructure is working'
                 run: |
-                    curl --silent --insecure -H "Host: via-swiss.test" https://127.0.0.1/lines | grep "Hello LinesController"
+                    curl --silent --fail --insecure -H "Host: via-swiss.test" https://127.0.0.1/lines | grep "Hello LinesController"
 
 #            -
 #                name: 'Test communication with DB'
