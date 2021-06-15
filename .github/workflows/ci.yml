@@ -56,7 +56,7 @@ jobs:
             -
                 run: 'pipenv run inv start && sleep 5'
             -
-                run: 'pipenv run inv load_fixtures'
+                run: 'pipenv run inv load-fixtures'
             -
                 name: 'Test the infrastructure is working'
                 run: |
