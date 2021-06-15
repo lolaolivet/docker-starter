@@ -56,7 +56,7 @@ jobs:
             -
                 run: 'pipenv run inv start && sleep 5'
             -
-                run: 'yarn build'
+                run: 'pipenv run inv encore-build'
             -
                 name: 'Test the infrastructure is working'
                 run: |
