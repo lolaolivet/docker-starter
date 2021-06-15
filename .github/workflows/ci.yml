@@ -56,11 +56,12 @@ jobs:
             -
                 run: 'pipenv run inv start && sleep 5'
             -
+                run: 'pipenv run inv encore-build'
+            -
                 name: 'Test the infrastructure is working'
                 run: |
-                    set -e
-                    set -o pipefail
-                    curl --fail --insecure --silent -H "Host: via-swiss.test" https://127.0.0.1/lines | grep "Hello LinesController"
+                    curl --silent --fail --insecure -H "Host: via-swiss.test" https://127.0.0.1/lines | grep "Hello LinesController"
+
 #            -
 #                name: 'Test communication with DB'
 #                run: |
