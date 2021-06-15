@@ -311,6 +311,7 @@ def generate_certificates(c):
         c.run('mkcert -cert-file infrastructure/docker/services/router/etc/ssl/certs/cert.pem -key-file infrastructure/docker/services/router/etc/ssl/certs/key.pem %s "*.%s"' % (c.root_domain, c.root_domain))
         print(Fore.GREEN + 'SSL certificate is now installed!')
 
+
 @task
 def encore_build(c):
     """
