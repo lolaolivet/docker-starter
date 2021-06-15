@@ -61,6 +61,9 @@ jobs:
                     set -e
                     set -o pipefail
                     curl --fail --insecure -H "Host: via-swiss.test" https://127.0.0.1/lines | grep "Hello LinesController"
+
+            -
+                run: 'ls'
 #            -
 #                name: 'Test communication with DB'
 #                run: |
