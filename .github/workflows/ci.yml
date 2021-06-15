@@ -55,7 +55,8 @@ jobs:
                 run: 'pipenv install --deploy --dev'
             -
                 run: 'pipenv run inv start && sleep 5'
-
+            -
+                run: 'yarn build'
             -
                 name: 'Test the infrastructure is working'
                 run: |
