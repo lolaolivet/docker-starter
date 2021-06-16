@@ -95,9 +95,9 @@ class Lines
         return $this;
     }
 
-     /**
-     * @return Collection|Feedback[]
-     */
+    /**
+    * @return Collection|Feedback[]
+    */
     public function getFeedbacks(): Collection
     {
         return $this->feedbacks;

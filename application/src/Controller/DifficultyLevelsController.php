@@ -7,7 +7,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\DifficultyLevel;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class DifficultyLevelsController extends AbstractController
 {
@@ -17,7 +16,6 @@ class DifficultyLevelsController extends AbstractController
      */
     public function index(): Response
     {
-
         $difficultyLevels = $this->getDoctrine()->getRepository(DifficultyLevel::class)->findAll();
 
         return $this->render('difficulty_levels/index.html.twig', [

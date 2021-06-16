@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Entity\Lines;
@@ -13,14 +14,12 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
-
 /**
  * @Route("/api", name="api")
  * @IsGranted("ROLE_USER")
  */
 class LinesApiController extends AbstractController
 {
-
     private LinesRepository $linesRepository;
 
     private EntityManagerInterface $entityManager;
@@ -59,7 +58,6 @@ class LinesApiController extends AbstractController
      */
     public function create(Request $request, SerializerInterface $serializer, ValidatorInterface $validator): Response
     {
-
         $data = $serializer->deserialize($request->getContent(), Lines::class, 'json');
 
         $line = new Lines();
@@ -72,16 +70,16 @@ class LinesApiController extends AbstractController
         $errors = $validator->validate($line);
 
         if (count($errors) > 0) {
-
-            $errorsString = (string) $errors;
+            $errorsString = '';
+            foreach ($errors as $violation) {
+                $errorsString .= $violation->getMessage().'<br>';
+            }
 
             return $this->json(['message' => $errorsString], 400, []);
-
         } else {
             $this->entityManager->persist($line);
             $this->entityManager->flush();
             return $this->json(['message' => 'OK'], 200, []);
-
         }
     }
 
@@ -106,7 +104,10 @@ class LinesApiController extends AbstractController
         $errors = $validator->validate($line);
 
         if (count($errors) > 0) {
-            $errorsString = (string) $errors;
+            $errorsString = '';
+            foreach ($errors as $violation) {
+                $errorsString .= $violation->getMessage().'<br>';
+            }
 
             return $this->json(['message' => $errorsString], 400, []);
         } else {
@@ -116,5 +117,4 @@ class LinesApiController extends AbstractController
             return $this->json(['message' => "OK"], 200, []);
         }
     }
-
 }

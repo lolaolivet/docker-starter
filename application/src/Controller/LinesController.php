@@ -16,7 +16,6 @@ use App\Repository\LinesRepository;
 
 class LinesController extends AbstractController
 {
-
     private LinesRepository $linesRepository;
 
     private EntityManagerInterface $entityManager;
@@ -32,7 +31,6 @@ class LinesController extends AbstractController
      */
     public function index(): Response
     {
-
         $lines = $this->linesRepository->findAll();
 
         return $this->render('lines/index.html.twig', [
@@ -44,8 +42,8 @@ class LinesController extends AbstractController
     /**
      * @Route("/lines/{id}", name="line_show")
      */
-    public function show(Lines $line, Request $request): Response {
-
+    public function show(Lines $line, Request $request): Response
+    {
         $feedback = new Feedback();
         $form = $this->createForm(FeedbackType::class, $feedback);
         $form->handleRequest($request);
@@ -60,7 +58,7 @@ class LinesController extends AbstractController
             $feedback = new Feedback();
             $form = $this->createForm(FeedbackType::class, $feedback);
         }
-        
+
         return $this->render('line/index.html.twig', [
             'line' => $line,
             'form' => $form->createView(),
@@ -71,8 +69,8 @@ class LinesController extends AbstractController
      * @Route("/line/{id}", name="line_edit")
      * @IsGranted("ROLE_ADMIN")
      */
-    public function edit(Lines $line, Request $request): Response {
-
+    public function edit(Lines $line, Request $request): Response
+    {
         $form = $this->createForm(LineEditType::class, $line, ['data' => $line]);
 
         $form->handleRequest($request);

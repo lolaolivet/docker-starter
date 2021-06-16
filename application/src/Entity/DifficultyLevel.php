@@ -12,9 +12,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class DifficultyLevel
 {
-    const  NOTATIONS_FR =  ['F' => 'F', 'PD' => 'PD', 'AD' => 'AD', 'D' => 'D',  'TD' => 'TD', 'ED' => 'ED'];
+    public const  NOTATIONS_FR =  ['F' => 'F', 'PD' => 'PD', 'AD' => 'AD', 'D' => 'D',  'TD' => 'TD', 'ED' => 'ED'];
 
-    const NOTATIONS_DE = ['A' => 'A', 'B' => 'B', 'C' => 'C', 'D' => 'D', 'E' => 'E', 'F' => 'F'];
+    public const NOTATIONS_DE = ['A' => 'A', 'B' => 'B', 'C' => 'C', 'D' => 'D', 'E' => 'E', 'F' => 'F'];
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

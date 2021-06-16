@@ -8,7 +8,6 @@ use Zenstruck\Foundry\RepositoryProxy;
 use Zenstruck\Foundry\ModelFactory;
 use Zenstruck\Foundry\Proxy;
 
-
 /**
  * @method static DifficultyLevel|Proxy createOne(array $attributes = [])
  * @method static DifficultyLevel[]|Proxy[] createMany(int $number, $attributes = [])
@@ -41,7 +40,7 @@ final class DifficultyLevelFactory extends ModelFactory
             'name' => self::faker()->unique()->randomElement(['Facile', 'Peu difficile', 'Assez difficile', 'Difficile', 'Très Difficile', 'Extrêmement difficile']),
             'notation_fr' => self::faker()->randomElement(['F', 'PD', 'AD', 'D', 'TD', 'ED']),
             'notation_de' => self::faker()->randomElement(['A', 'B', 'C', 'D', 'E', 'F']),
-            'colour' => self::faker()->unique()->hexColor()
+            'colour' => self::faker()->unique()->hexColor
         ];
     }
 
@@ -49,7 +48,7 @@ final class DifficultyLevelFactory extends ModelFactory
     {
         // see https://github.com/zenstruck/foundry#initialization
         return $this
-            ->afterInstantiate(function(DifficultyLevel $difficultyLevel) {
+            ->afterInstantiate(function (DifficultyLevel $difficultyLevel) {
                 return new DifficultyLevel();
             })
         ;
