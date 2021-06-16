@@ -51,6 +51,11 @@ class Feedback
      */
     private $line;
 
+    public function __toString()
+    {
+        return $this->line;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

@@ -38,6 +38,7 @@ class Lines
     /**
      * @ORM\ManyToMany(targetEntity=DifficultyLevel::class)
      * @Groups({"show_line"})
+     * @ORM\JoinTable(name="lines_difficulty_level")
      */
     private $difficulties;
 

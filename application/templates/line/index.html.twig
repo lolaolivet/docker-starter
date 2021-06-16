@@ -29,17 +29,23 @@
                         <td style="width: 67%">
                             <p>{{ feedback.comment }}</p>
                         </td>
-                        <td style="width: 3%">
-                            <button data-path="{{url('feedback_delete', {id: feedback.id}, false)}}" class="btn btn-danger feedbackDelete">x</button>
-                        </td>
+
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <td style="width: 3%">
+                                <button data-path="{{url('feedback_delete', {id: feedback.id}, false)}}" class="btn btn-danger feedbackDelete">x</button>
+                            </td>
+                        {% endif %}
                     </th>
                 </tr>
 
             {% endfor %}
         </tbody>
     </table>
+    {% if is_granted('ROLE_USER') %}
+        {{form(form)}}
+    {% endif %}
 
-    {{form(form)}}
+
 </div>
 
 {% endblock %}

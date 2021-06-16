@@ -11,9 +11,12 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
 
 /**
  * @Route("/api", name="api")
+ * @IsGranted("ROLE_USER")
  */
 class LinesApiController extends AbstractController
 {
@@ -26,7 +29,7 @@ class LinesApiController extends AbstractController
 
     private ValidatorInterface $validator;
 
-    public function __construct(LinesRepository $linesRepository, EntityManagerInterface $entityManager, DifficultyLevelRepository $difficultyLevelRepository, ValidatorInterface $validator)
+    public function __construct(LinesRepository $linesRepository, EntityManagerInterface $entityManager, DifficultyLevelRepository $difficultyLevelRepository)
     {
         $this->linesRepository = $linesRepository;
         $this->entityManager = $entityManager;
@@ -90,7 +93,6 @@ class LinesApiController extends AbstractController
         $data = $serializer->deserialize($request->getContent(), Lines::class, 'json');
         $name = $data->getName();
         $difficulties = $data->getDifficulties();
-
         $line->setName($name);
 
         foreach ($difficulties as $difficulty) {

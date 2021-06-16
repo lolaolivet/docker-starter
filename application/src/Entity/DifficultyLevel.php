@@ -12,6 +12,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class DifficultyLevel
 {
+    const  NOTATIONS_FR =  ['F' => 'F', 'PD' => 'PD', 'AD' => 'AD', 'D' => 'D',  'TD' => 'TD', 'ED' => 'ED'];
+
+    const NOTATIONS_DE = ['A' => 'A', 'B' => 'B', 'C' => 'C', 'D' => 'D', 'E' => 'E', 'F' => 'F'];
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -28,26 +31,12 @@ class DifficultyLevel
 
     /**
      * @ORM\Column(type="string", length=5)
-     * @Assert\NotBlank
-     * @Assert\Length(
-     *      min = 1,
-     *      max = 5,
-     *      minMessage = "The french notation must at least have {{ limit }} charachters",
-     *      maxMessage = "The french notation cannot have more than {{ limit }} charachters"
-     * )
      *  @Groups({"show_line"})
      */
     private $notation_fr;
 
     /**
      * @ORM\Column(type="string", length=2)
-     * @Assert\NotBlank
-     * @Assert\Length(
-     *      min = 1,
-     *      max = 2,
-     *      minMessage = "The german notation must at least have {{ limit }} charachters",
-     *      maxMessage = "The german notation cannot have more than {{ limit }} charachters"
-     * )
      */
     private $notation_de;
 
