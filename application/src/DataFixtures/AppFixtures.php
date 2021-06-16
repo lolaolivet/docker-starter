@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\DifficultyLevel;
@@ -9,42 +10,39 @@ use App\Factory\DifficultyLevelFactory;
 use App\Factory\LinesFactory;
 use App\Factory\FeedbackFactory;
 use App\Entity\FeedBack;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
+    private $passwordHasher;
+
+    public function __construct(UserPasswordHasherInterface $passwordHasher)
+    {
+        $this->passwordHasher = $passwordHasher;
+    }
+
     public function load(ObjectManager $manager)
     {
-        // $product = new Product();
-        // $manager->persist($product);
-
-        // $difficultyLevel = new DifficultyLevel();
-        // $difficultyLevel->setDifficulty('Facile');
-        // $difficultyLevel->setNotationFr('F');
-        // $difficultyLevel->setNotationDe('A');
-        // $difficultyLevel->setColour('#34e5eb');
-        // $manager->persist($difficultyLevel);
-
-        // $difficultyLevel2 = new DifficultyLevel();
-        // $difficultyLevel2->setDifficulty('Difficile');
-        // $difficultyLevel2->setNotationFr('D');
-        // $difficultyLevel2->setNotationDe('D');
-        // $difficultyLevel2->setColour('#eb345c');
-        // $manager->persist($difficultyLevel2);
 
         $d = DifficultyLevelFactory::createMany(6);
 
-
-// $manager
-        // dd($d);
-        // $f = LinesFactory::createMany(10, ['difficulty' => DifficultyLevelFactory::randomRange(1, 5)]);
-        // dd($f->object);
-
-        // dd($f);
-
         for ($i = 0; $i < 20; $i++) {
-            FeedbackFactory::createOne(['line' => LinesFactory::new()->createOne(['difficulty' => DifficultyLevelFactory::randomRange(1, 5)])->object()]);
+            FeedbackFactory::createOne(['line' => LinesFactory::new()->createOne(['difficulties' => DifficultyLevelFactory::randomRange(1, 5)])->object()]);
         }
-        // $feedbacks = FeedbackFactory::createMany(20, ['line' => LinesFactory::randomRange(1, 10)->getId()]);
+
+        $user_admin = new User();
+
+        $user_admin->setUsername('Admin');
+        $user_admin->setPassword($this->passwordHasher->hashPassword($user_admin, 'root'));
+        $user_admin->setRoles(['ROLE_USER','ROLE_ADMIN']);
+        $manager->persist($user_admin);
+
+        $user = new User();
+
+        $user->setUsername('Lola');
+        $user->setPassword($this->passwordHasher->hashPassword($user, 'Lola'));
+        $user->setRoles(['ROLE_USER']);
+        $manager->persist($user);
 
 
         $manager->flush();

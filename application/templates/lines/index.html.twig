@@ -1,36 +1,36 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Hello {{ controller_name }}!{% endblock %}
-{% block stylesheets %}
-    <link href="{{ asset('css/main.css') }}" rel="stylesheet"/>
-{% endblock %}
-{% block body %}
-<style>
-    
-</style>
 
+{% block body %}
 <div class="example-wrapper">
     <h1>Hello {{ controller_name }}! 🧗🏻‍♀️</h1>
 
-<pre>
-    {{ dump(lines) }}
-</pre>
+    <div data-controller="hello"></div>
 
 <div>
+<table class="table table-hover">
+  <tbody>
    {% for line in lines %}
-        <div class="lineContainer">
-            <div class="lineRow">
-                <a href="{{path('line_show', {id: line.id})}}">{{ line.name }}</a>
-            </div>
-            <div class="difficultyRow">
-            {% for d in line.difficulty %}
-                <div class="difficulty" style="color: {{d.colour}}">
-                <p>{{ d.difficulty }}</p>
-                </div>
-            {% endfor %}
-            </div>
-        </div>
+            <th scope="row">
+                <td>
+                    <a class="link" href="{{path('line_show', {id: line.id})}}">{{ line.name }}</a>
+                </td>
+                <td class="difficultyRow">
+                {% for difficulty in line.difficulties %}
+                    <div class="difficulty" style="color: {{difficulty.colour}}">
+                        <p>{{ difficulty.name }}</p>
+                    </div>
+                {% endfor %}
+                </td>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <td>
+                        <a class="link" href="{{ path('line_edit', {id: line.id}) }}"><button style="margin: 0" class="btn btn-outline-warning">Edit</button></a>
+                    </td>
+                {% endif %}
+            </th>
+        </tr>
     {% endfor %}
-    </div>
-</div>
+    </tbody>
+</table>
 {% endblock %}

@@ -1,0 +1,12 @@
+
+{% for feedback in value %}
+    <div style="margin-bottom: 5px;">
+        {% set length = feedback.rate|number_format %}
+        <p style="margin: 0;">{{ feedback.comment }}</p>
+        {% if feedback.rate > 0 %}
+            {% for i in range(1, length) %}
+                <span>⭐️</span>
+            {% endfor %}
+        {% endif %}
+    </div>
+{% endfor %}

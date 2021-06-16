@@ -1,0 +1,17 @@
+easy_admin:
+  entities:
+    DifficultyLevel:
+      class: App\Entity\DifficultyLevel
+      list:
+        title: '%%entity_name%% listing'
+        fields:
+          - { property: 'name', type: 'text' }
+          - { property: 'notation_fr', type: 'text' }
+          - { property: 'notation_de', type: 'text' }
+          - { property: 'colour', template: 'easy_admin/DifficultyLevel/color.html.twig' }
+      form:
+        fields:
+          - { property: 'name' }
+          - { property: 'notation_fr', type: 'choice', type_options: { choices: !php/const App\Entity\DifficultyLevel::NOTATIONS_FR } }
+          - { property: 'notation_de', type: 'choice', type_options: { choices: !php/const App\Entity\DifficultyLevel::NOTATIONS_DE } }
+          - { property: 'colour', type: 'Symfony\Component\Form\Extension\Core\Type\ColorType' }

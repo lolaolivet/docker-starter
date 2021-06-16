@@ -38,8 +38,8 @@ final class DifficultyLevelFactory extends ModelFactory
     {
         return [
             // TODO add your default values here (https://github.com/zenstruck/foundry#model-factories)
-            'difficulty' => self::faker()->unique()->randomElement(['Facile', 'Peu difficile', 'Assez difficile', 'Difficile', 'Très Difficile', 'Extrêmement difficile']),
-            'notation_fr' => self::faker()->randomElement(['FEEEEEEE', 'PD', 'AD', 'D', 'TD', 'ED']),
+            'name' => self::faker()->unique()->randomElement(['Facile', 'Peu difficile', 'Assez difficile', 'Difficile', 'Très Difficile', 'Extrêmement difficile']),
+            'notation_fr' => self::faker()->randomElement(['F', 'PD', 'AD', 'D', 'TD', 'ED']),
             'notation_de' => self::faker()->randomElement(['A', 'B', 'C', 'D', 'E', 'F']),
             'colour' => self::faker()->unique()->hexColor()
         ];

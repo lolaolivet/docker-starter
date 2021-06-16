@@ -6,14 +6,23 @@
         {# Run `composer require symfony/webpack-encore-bundle`
            and uncomment the following Encore helpers to start using Symfony UX #}
         {% block stylesheets %}
-            {#{{ encore_entry_link_tags('app') }}#}
+            {{ encore_entry_link_tags('app') }}
         {% endblock %}
 
         {% block javascripts %}
-            {#{{ encore_entry_script_tags('app') }}#}
+            {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
     <body>
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <div style="float: right; padding-right: 20px;">
+                <a href="{{path('app_logout')}}" class="link"><p>{{ app.user.username }}</p></a>
+            </div>
+        {% else %}
+            <div style="float: right; padding-right: 20px;">
+                <a href="{{path('app_login')}}" class="link"><p>Login</p></a>
+            </div>
+        {% endif %}
         {% block body %}{% endblock %}
     </body>
 </html>

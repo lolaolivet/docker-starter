@@ -1,48 +1,51 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Hello {{line.name}} 🇨🇭!{% endblock %}
-{% block stylesheets %}
-    <link href="{{ asset('css/main.css') }}" rel="stylesheet"/>
-{% endblock %}
+
 {% block body %}
-<style>
-    
-</style>
 
 <div class="example-wrapper">
-    <h1>Hello {{line.name}} 🇨🇭!</h1>
+    <a class="link" href="{{path('lines')}}"><h1>Hello {{line.name}} 🇨🇭!</h1></a>
 
     <div class="difficultyRow">
-        {% for d in line.difficulty %}
+        {% for difficulty in line.difficulties %}
             <div class="difficulty">
-                <p style="color: {{d.colour}}; font-size: 14px;">{{d.difficulty}}</p>
+                <p style="color: {{difficulty.colour}}; font-size: 14px;">{{difficulty.name}}</p>
             </div>
         {% endfor %}
     </div>
 
-<pre>
-    {{ dump(line) }}
-</pre>
+    <table class="table table-hover">
+        <tbody>
+            {% for feedback in line.feedbacks %}
+                <tr>
+                    <th scope="row">
+                        <td style="width: 25%">
+                            <p>{{ feedback.date|date('d F Y') }}</p>
+                        </td>
+                        <td style="width: 5%">
+                            <p>{{ feedback.rate }}</p>
+                        </td>
+                        <td style="width: 67%">
+                            <p>{{ feedback.comment }}</p>
+                        </td>
 
-<div>
-    
-    <div class="feedbackContainer">
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <td style="width: 3%">
+                                <button data-path="{{url('feedback_delete', {id: feedback.id}, false)}}" class="btn btn-danger feedbackDelete">x</button>
+                            </td>
+                        {% endif %}
+                    </th>
+                </tr>
 
-        
-        {% for feedback in line.feedbacks %}
-        <div class="feedbackRow">
-            <div style="width: 25%">
-                <p>{{ feedback.date|date('d F Y') }}</p>
-            </div>
-            <div style="width: 5%">
-                <p>{{ feedback.rate }}</p>
-            </div>
-            <div style="width: 70%">
-                <p>{{ feedback.comment }}</p>
-            </div>
-        </div>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% if is_granted('ROLE_USER') %}
+        {{form(form)}}
+    {% endif %}
 
-        {% endfor %}
-    </div>
+
 </div>
+
 {% endblock %}

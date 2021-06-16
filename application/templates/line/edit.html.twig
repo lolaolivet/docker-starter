@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit ✏️{% endblock %}
+
+{% block body %}
+<div class="example-wrapper">
+    <div class="lineEdit">
+        <a class="link" href="{{ path('lines') }}"><h1>Edit ✏️ !</h1></a>
+        <br/>
+        {{ form(form) }}
+    </div>
+</div>
+{% endblock %}

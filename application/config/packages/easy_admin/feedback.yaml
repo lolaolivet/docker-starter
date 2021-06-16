@@ -1,0 +1,16 @@
+easy_admin:
+  entities:
+    Feedback:
+      class: App\Entity\Feedback
+      list:
+        fields:
+          - { property: 'id' }
+          - { property: 'date', type: 'date' }
+          - { property: 'rate', template: 'easy_admin/Feedback/rate.html.twig' }
+          - { property: 'comment' }
+          - { property: 'line'}
+      form:
+        fields:
+          - { property: 'date', type: 'date', type_options: {widget: 'single_text'} }
+          - { property: 'rate', type: 'Symfony\Component\Form\Extension\Core\Type\RangeType', type_options: { attr: { min: 0, max: 5 } } }
+          - { property: 'comment', type: 'textarea' }

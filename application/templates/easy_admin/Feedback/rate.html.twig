@@ -1,0 +1,9 @@
+<div>
+    {% set length = value|number_format %}
+    {% if value > 0 %}
+
+        {% for i in range(1, length) %}
+            <span>⭐️</span>
+        {% endfor %}
+    {% endif %}
+</div>
