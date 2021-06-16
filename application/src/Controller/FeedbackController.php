@@ -32,6 +32,5 @@ class FeedbackController extends AbstractController
             $this->entityManager->flush();
             return $this->json(['message' => 'OK'], 200, []);
         }
-        return $this->json(['message' => 'This feedback does not exists'], 404, []);
     }
 }
