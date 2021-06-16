@@ -29,7 +29,7 @@ class LinesApiController extends AbstractController
 
     private ValidatorInterface $validator;
 
-    public function __construct(LinesRepository $linesRepository, EntityManagerInterface $entityManager, DifficultyLevelRepository $difficultyLevelRepository, ValidatorInterface $validator)
+    public function __construct(LinesRepository $linesRepository, EntityManagerInterface $entityManager, DifficultyLevelRepository $difficultyLevelRepository)
     {
         $this->linesRepository = $linesRepository;
         $this->entityManager = $entityManager;
