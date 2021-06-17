@@ -329,11 +329,3 @@ def phpstan(c):
     with Builder(c):
         docker_compose_run(c, './vendor/bin/phpstan analyse src -l 5')
 
-
-@task
-def csfixer(c):
-    """
-    Runs php-cs-csfixer
-    """
-    with Builder(c):
-        docker_compose_run(c, 'php php-cs-fixer/vendor/bin/php-cs-fixer fix src')
