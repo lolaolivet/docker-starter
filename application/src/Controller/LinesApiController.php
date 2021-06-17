@@ -133,8 +133,5 @@ class LinesApiController extends AbstractController
             $this->entityManager->flush();
             return $this->json(['message' => "OK"], 200, []);
         }
-
-        return $this->json(['message' => "Impossible to delete a line that does not exist.."], 404, []);
-
     }
 }
