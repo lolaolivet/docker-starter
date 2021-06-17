@@ -58,10 +58,12 @@ class LinesApiController extends AbstractController
      */
     public function create(Request $request, SerializerInterface $serializer, ValidatorInterface $validator): Response
     {
+
         $data = $serializer->deserialize($request->getContent(), Lines::class, 'json');
 
         $line = new Lines();
         $difficulties = $data->getDifficulties();
+        $line->setName($data->getName());
 
         foreach ($difficulties as $difficulty) {
             $line->addDifficulty($this->difficultyLevelRepository->findOneBy(['name' => $difficulty->getName()]));
@@ -72,7 +74,7 @@ class LinesApiController extends AbstractController
         if (count($errors) > 0) {
             $errorsString = '';
             foreach ($errors as $violation) {
-                $errorsString .= $violation->getMessage().'<br>';
+                $errorsString .= $violation->getMessage().'\n';
             }
 
             return $this->json(['message' => $errorsString], 400, []);
@@ -91,7 +93,10 @@ class LinesApiController extends AbstractController
         $data = $serializer->deserialize($request->getContent(), Lines::class, 'json');
         $name = $data->getName();
         $difficulties = $data->getDifficulties();
-        $line->setName($name);
+
+        if ($name) {
+            $line->setName($name);
+        }
 
         foreach ($difficulties as $difficulty) {
             $difficulty_level = $this->difficultyLevelRepository->findOneBy(['name' => $difficulty->getName()]);
@@ -116,5 +121,20 @@ class LinesApiController extends AbstractController
 
             return $this->json(['message' => "OK"], 200, []);
         }
+    }
+
+    /**
+     * @Route("/lines/{id}", name="api_remove_line", methods={"DELETE"})
+     */
+    public function remove(Lines $line): Response
+    {
+//        return $this->json([]);
+//        if ($this->linesRepository->find($line->getId())) {
+            $this->entityManager->remove($line);
+            $this->entityManager->flush();
+            return $this->json(['message' => "OK"], 200, []);
+//        }
+//        return $this->json(['message' => "Impossible to delete a line that does not exist.."], 404, []);
+
     }
 }

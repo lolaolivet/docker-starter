@@ -27,12 +27,13 @@ class ApiKeyAuthenticator extends AbstractAuthenticator
 
     public function supports(Request $request): bool
     {
-        return $request->headers->has('X-AUTH-TOKEN');
+        dd($request);
+        return $request->headers->has('X-AUTH-TOKEN') ?? $request->query->has('X-AUTH-TOKEN');
     }
 
     public function authenticate(Request $request): PassportInterface
     {
-        $apiToken = $request->headers->get('X-AUTH-TOKEN');
+        $apiToken = $request->headers->get('X-AUTH-TOKEN') ?? $request->query->get('X-AUTH-TOKEN');
         if (null === $apiToken) {
             throw new CustomUserMessageAuthenticationException('NO API TOKEN PROVIDED');
         }
