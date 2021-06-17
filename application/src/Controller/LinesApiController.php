@@ -128,13 +128,13 @@ class LinesApiController extends AbstractController
      */
     public function remove(Lines $line): Response
     {
-//        return $this->json([]);
-//        if ($this->linesRepository->find($line->getId())) {
+        if ($line instanceof Lines) {
             $this->entityManager->remove($line);
             $this->entityManager->flush();
             return $this->json(['message' => "OK"], 200, []);
-//        }
-//        return $this->json(['message' => "Impossible to delete a line that does not exist.."], 404, []);
+        }
+
+        return $this->json(['message' => "Impossible to delete a line that does not exist.."], 404, []);
 
     }
 }

@@ -47,7 +47,7 @@ class Feedback
     private $rate;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Lines::class)
+     * @ORM\ManyToOne(targetEntity=Lines::class, inversedBy="feedbacks")
      */
     private $line;
 

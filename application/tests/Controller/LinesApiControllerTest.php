@@ -2,11 +2,9 @@
 
 namespace App\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use App\Repository\UserRepository;
 use App\Repository\LinesRepository;
-use App\Repository\Lines;
 
 
 class LinesApiControllerTest extends WebTestCase
@@ -100,5 +98,21 @@ class LinesApiControllerTest extends WebTestCase
 
         $this->assertResponseIsSuccessful();
         $this->assertSame('TEST', $line->getName());
+    }
+
+    public function testRemove():void
+    {
+        $client = static::createClient();
+        $userRepository = static::$container->get(UserRepository::class);
+        $linesRepository = static::$container->get(LinesRepository::class);
+
+        $line = $linesRepository->findOneBy([]);
+        $line_id = $line->getId();
+
+        $testUser = $userRepository->findOneBy(['username' => 'Admin']);
+        $client->loginUser($testUser);
+        $client->request('DELETE', 'api/lines/'. $line_id);
+
+        $this->assertResponseIsSuccessful();
     }
 }

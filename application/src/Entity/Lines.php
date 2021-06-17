@@ -39,14 +39,13 @@ class Lines
      * @ORM\ManyToMany(targetEntity=DifficultyLevel::class)
      * @Groups({"show_line"})
      * @ORM\JoinTable(name="lines_difficulty_level")
-     * @ORM\JoinColumn(name="lines_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $difficulties;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Feedback", mappedBy="line")
+     * @ORM\OneToMany(targetEntity="App\Entity\Feedback", mappedBy="line", cascade={"remove"})
      * @Groups({"show_line"})
-     * @ORM\JoinColumn(name="line_id", referencedColumnName="id", onDelete="CASCADE")
+     * @ORM\JoinColumn(name="id", referencedColumnName="line_id")
      */
     private $feedbacks;
 
