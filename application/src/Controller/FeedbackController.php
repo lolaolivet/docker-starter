@@ -27,10 +27,8 @@ class FeedbackController extends AbstractController
      */
     public function deleteFeedback(Feedback $feedback): Response
     {
-        if ($feedback instanceof Feedback) {
-            $this->entityManager->remove($feedback);
-            $this->entityManager->flush();
-            return $this->json(['message' => 'OK'], 200, []);
-        }
+        $this->entityManager->remove($feedback);
+        $this->entityManager->flush();
+        return $this->json(['message' => 'OK'], 200, []);
     }
 }

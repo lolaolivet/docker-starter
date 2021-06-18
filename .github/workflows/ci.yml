@@ -18,7 +18,7 @@ jobs:
                 run: 'wget https://github.com/FriendsOfPHP/PHP-CS-Fixer/releases/download/v2.18.4/php-cs-fixer.phar -O php-cs-fixer'
             -
                 name: 'Check PHP CS'
-                run: 'php php-cs-fixer fix --dry-run --allow-risky yes --diff --config=/.php_cs'
+                run: 'php php-cs-fixer fix --dry-run --allow-risky yes --diff --config=.php_cs'
 
     check-python-cs:
         runs-on: ubuntu-latest

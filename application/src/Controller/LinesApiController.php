@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -60,16 +61,14 @@ class LinesApiController extends AbstractController
     {
 
         $data = $serializer->deserialize($request->getContent(), Lines::class, 'json');
-
-        $line = new Lines();
         $difficulties = $data->getDifficulties();
-        $line->setName($data->getName());
-
         foreach ($difficulties as $difficulty) {
-            $line->addDifficulty($this->difficultyLevelRepository->findOneBy(['name' => $difficulty->getName()]));
+
+            $data->addDifficulty($this->difficultyLevelRepository->findOneBy(['name' => $difficulty->getName()]));
+            $data->removeDifficulty($difficulty);
         }
 
-        $errors = $validator->validate($line);
+        $errors = $validator->validate($data);
 
         if (count($errors) > 0) {
             $errorsString = '';
@@ -79,7 +78,7 @@ class LinesApiController extends AbstractController
 
             return $this->json(['message' => $errorsString], 400, []);
         } else {
-            $this->entityManager->persist($line);
+            $this->entityManager->persist($data);
             $this->entityManager->flush();
             return $this->json(['message' => 'OK'], 200, []);
         }
@@ -128,10 +127,8 @@ class LinesApiController extends AbstractController
      */
     public function remove(Lines $line): Response
     {
-        if ($line instanceof Lines) {
-            $this->entityManager->remove($line);
-            $this->entityManager->flush();
-            return $this->json(['message' => "OK"], 200, []);
-        }
+        $this->entityManager->remove($line);
+        $this->entityManager->flush();
+        return $this->json(['message' => "OK"], 200, []);
     }
 }

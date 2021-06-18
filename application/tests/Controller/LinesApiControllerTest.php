@@ -53,16 +53,16 @@ class LinesApiControllerTest extends WebTestCase
         $linesRepository = static::$container->get(LinesRepository::class);
 
         $line = $linesRepository->findOneBy([]);
-        $line_id = $line->getId();
+        $lineId = $line->getId();
 
         $testUser = $userRepository->findOneBy(['username' => 'Admin']);
         $client->loginUser($testUser);
 
-        $client->request('GET', 'api/lines/'. $line_id);
+        $client->request('GET', 'api/lines/'. $lineId);
         $this->assertResponseIsSuccessful();
 
         $jsonResponse = json_decode($client->getResponse()->getContent());
-        $this->assertEquals($line_id, $jsonResponse->id);
+        $this->assertEquals($lineId, $jsonResponse->id);
     }
 
     public function testCreate(): void
@@ -78,9 +78,9 @@ class LinesApiControllerTest extends WebTestCase
         $this->assertResponseIsSuccessful();
 
         $linesRepository = static::$container->get(LinesRepository::class);
-        $created_line_name = $linesRepository->findOneBy(['name'=> 'Pully'])->getName();
+        $createdLineName = $linesRepository->findOneBy(['name'=> 'Pully'])->getName();
 
-        $this->assertSame('Pully', $created_line_name);
+        $this->assertSame('Pully', $createdLineName);
     }
 
     public function testUpdate():void
@@ -90,11 +90,11 @@ class LinesApiControllerTest extends WebTestCase
         $linesRepository = static::$container->get(LinesRepository::class);
 
         $line = $linesRepository->findOneBy([]);
-        $line_id = $line->getId();
+        $lineId = $line->getId();
 
         $testUser = $userRepository->findOneBy(['username' => 'Admin']);
         $client->loginUser($testUser);
-        $client->request('PUT', 'api/lines/'. $line_id, [], [], ['Content-Type' => 'application/json'], '{"name": "TEST", "difficulties":[{"name": "Difficile"}], "feedbacks": []}');
+        $client->request('PUT', 'api/lines/'. $lineId, [], [], ['Content-Type' => 'application/json'], '{"name": "TEST", "difficulties":[{"name": "Difficile"}], "feedbacks": []}');
 
         $this->assertResponseIsSuccessful();
         $this->assertSame('TEST', $line->getName());
@@ -107,11 +107,11 @@ class LinesApiControllerTest extends WebTestCase
         $linesRepository = static::$container->get(LinesRepository::class);
 
         $line = $linesRepository->findOneBy([]);
-        $line_id = $line->getId();
+        $lineId = $line->getId();
 
         $testUser = $userRepository->findOneBy(['username' => 'Admin']);
         $client->loginUser($testUser);
-        $client->request('DELETE', 'api/lines/'. $line_id);
+        $client->request('DELETE', 'api/lines/'. $lineId);
 
         $this->assertResponseIsSuccessful();
     }
