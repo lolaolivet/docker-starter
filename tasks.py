@@ -319,3 +319,12 @@ def encore_build(c):
     """
     with Builder(c):
         docker_compose_run(c, './node_modules/.bin/encore production')
+
+
+@task
+def phpstan(c):
+    """
+    Runs phpstan
+    """
+    with Builder(c):
+        docker_compose_run(c, './vendor/bin/phpstan analyse src -l 5')

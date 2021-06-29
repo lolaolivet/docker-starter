@@ -47,7 +47,7 @@ final class FeedbackFactory extends ModelFactory
     {
         // see https://github.com/zenstruck/foundry#initialization
         return $this
-            ->afterInstantiate(function(Feedback $feedback) {
+            ->afterInstantiate(function (Feedback $feedback) {
                 return new Feedback();
             })
         ;

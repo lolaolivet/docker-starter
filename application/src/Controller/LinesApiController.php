@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Entity\Lines;
@@ -9,10 +10,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-
 
 /**
  * @Route("/api", name="api")
@@ -20,7 +21,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
  */
 class LinesApiController extends AbstractController
 {
-
     private LinesRepository $linesRepository;
 
     private EntityManagerInterface $entityManager;
@@ -61,27 +61,26 @@ class LinesApiController extends AbstractController
     {
 
         $data = $serializer->deserialize($request->getContent(), Lines::class, 'json');
-
-        $line = new Lines();
         $difficulties = $data->getDifficulties();
-
         foreach ($difficulties as $difficulty) {
-            $line->addDifficulty($this->difficultyLevelRepository->findOneBy(['name' => $difficulty->getName()]));
+
+            $data->addDifficulty($this->difficultyLevelRepository->findOneBy(['name' => $difficulty->getName()]));
+            $data->removeDifficulty($difficulty);
         }
 
-        $errors = $validator->validate($line);
+        $errors = $validator->validate($data);
 
         if (count($errors) > 0) {
-
-            $errorsString = (string) $errors;
+            $errorsString = '';
+            foreach ($errors as $violation) {
+                $errorsString .= $violation->getMessage().'\n';
+            }
 
             return $this->json(['message' => $errorsString], 400, []);
-
         } else {
-            $this->entityManager->persist($line);
+            $this->entityManager->persist($data);
             $this->entityManager->flush();
             return $this->json(['message' => 'OK'], 200, []);
-
         }
     }
 
@@ -93,7 +92,10 @@ class LinesApiController extends AbstractController
         $data = $serializer->deserialize($request->getContent(), Lines::class, 'json');
         $name = $data->getName();
         $difficulties = $data->getDifficulties();
-        $line->setName($name);
+
+        if ($name) {
+            $line->setName($name);
+        }
 
         foreach ($difficulties as $difficulty) {
             $difficulty_level = $this->difficultyLevelRepository->findOneBy(['name' => $difficulty->getName()]);
@@ -106,7 +108,10 @@ class LinesApiController extends AbstractController
         $errors = $validator->validate($line);
 
         if (count($errors) > 0) {
-            $errorsString = (string) $errors;
+            $errorsString = '';
+            foreach ($errors as $violation) {
+                $errorsString .= $violation->getMessage().'<br>';
+            }
 
             return $this->json(['message' => $errorsString], 400, []);
         } else {
@@ -117,4 +122,13 @@ class LinesApiController extends AbstractController
         }
     }
 
+    /**
+     * @Route("/lines/{id}", name="api_remove_line", methods={"DELETE"})
+     */
+    public function remove(Lines $line): Response
+    {
+        $this->entityManager->remove($line);
+        $this->entityManager->flush();
+        return $this->json(['message' => "OK"], 200, []);
+    }
 }

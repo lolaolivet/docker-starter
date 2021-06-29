@@ -37,7 +37,7 @@ final class LinesFactory extends ModelFactory
     {
         return [
             // TODO add your default values here (https://github.com/zenstruck/foundry#model-factories)
-            'name' => self::faker()->unique()->city(),
+            'name' => self::faker()->unique()->city,
         ];
     }
 
@@ -45,7 +45,7 @@ final class LinesFactory extends ModelFactory
     {
         // see https://github.com/zenstruck/foundry#initialization
         return $this
-            ->afterInstantiate(function(Lines $lines) {
+            ->afterInstantiate(function (Lines $lines) {
                 return new Lines();
             })
         ;

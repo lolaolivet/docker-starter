@@ -43,10 +43,17 @@ class Lines
     private $difficulties;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Feedback", mappedBy="line")
+     * @ORM\OneToMany(targetEntity="App\Entity\Feedback", mappedBy="line", cascade={"remove"})
      * @Groups({"show_line"})
+     * @ORM\JoinColumn(name="id", referencedColumnName="line_id")
      */
     private $feedbacks;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Country::class, inversedBy="lines")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $country;
 
     public function __construct()
     {
@@ -95,9 +102,9 @@ class Lines
         return $this;
     }
 
-     /**
-     * @return Collection|Feedback[]
-     */
+    /**
+    * @return Collection|Feedback[]
+    */
     public function getFeedbacks(): Collection
     {
         return $this->feedbacks;
@@ -115,6 +122,18 @@ class Lines
     public function removeFeedback(Feedback $feedback): self
     {
         $this->feedbacks->removeElement($feedback);
+
+        return $this;
+    }
+
+    public function getCountry(): ?Country
+    {
+        return $this->country;
+    }
+
+    public function setCountry(?Country $country): self
+    {
+        $this->country = $country;
 
         return $this;
     }

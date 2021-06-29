@@ -16,7 +16,8 @@ class FeedbackController extends AbstractController
 
     private EntityManagerInterface $entityManager;
 
-    public function __construct(FeedbackRepository $feedbackRepository, EntityManagerInterface $entityManager) {
+    public function __construct(FeedbackRepository $feedbackRepository, EntityManagerInterface $entityManager)
+    {
         $this->feedbackRepository = $feedbackRepository;
         $this->entityManager = $entityManager;
     }
@@ -26,12 +27,8 @@ class FeedbackController extends AbstractController
      */
     public function deleteFeedback(Feedback $feedback): Response
     {
-        if ($feedback instanceof Feedback) {
-            $this->entityManager->remove($feedback);
-            $this->entityManager->flush();
-            return $this->json(['message' => 'OK'], 200, []);
-        }
-        return $this->json(['message' => 'This feedback does not exists'],  404, []);
-
+        $this->entityManager->remove($feedback);
+        $this->entityManager->flush();
+        return $this->json(['message' => 'OK'], 200, []);
     }
 }

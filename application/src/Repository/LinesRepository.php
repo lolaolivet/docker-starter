@@ -19,7 +19,8 @@ class LinesRepository extends ServiceEntityRepository
         parent::__construct($registry, Lines::class);
     }
 
-    public function findFeedbacksById(int $value) {
+    public function findFeedbacksById(int $value)
+    {
 
 
         // return $this->createQueryBuilder('l')

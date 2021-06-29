@@ -12,9 +12,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class DifficultyLevel
 {
-    const  NOTATIONS_FR =  ['F' => 'F', 'PD' => 'PD', 'AD' => 'AD', 'D' => 'D',  'TD' => 'TD', 'ED' => 'ED'];
+    public const  NOTATIONS_FR =  ['F' => 'F', 'PD' => 'PD', 'AD' => 'AD', 'D' => 'D',  'TD' => 'TD', 'ED' => 'ED'];
 
-    const NOTATIONS_DE = ['A' => 'A', 'B' => 'B', 'C' => 'C', 'D' => 'D', 'E' => 'E', 'F' => 'F'];
+    public const NOTATIONS_DE = ['A' => 'A', 'B' => 'B', 'C' => 'C', 'D' => 'D', 'E' => 'E', 'F' => 'F'];
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -49,7 +49,7 @@ class DifficultyLevel
      *      message = "The color must be an hexadecimal"
      * )
      */
-    private $colour;
+    private $color;
 
     public function getId(): ?int
     {
@@ -92,14 +92,14 @@ class DifficultyLevel
         return $this;
     }
 
-    public function getColour(): ?string
+    public function getColor(): ?string
     {
-        return $this->colour;
+        return $this->color;
     }
 
-    public function setColour(string $colour): self
+    public function setColor(string $color): self
     {
-        $this->colour = $colour;
+        $this->color = $color;
 
         return $this;
     }

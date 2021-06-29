@@ -13,12 +13,15 @@
 
 .difficultyRow {
     display: flex;
-    justify-content: left;
     align-items: center;
+    margin: 0;
 }
 
 .difficulty {
     margin-right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .levelContainer {
@@ -27,7 +30,7 @@
     align-items: center; 
     justify-content: space-between; 
     width: 100%; 
-     border-bottom: 1px solid gray
+    border-bottom: 1px solid gray
 }
 
 .levelColor {
@@ -40,10 +43,13 @@
 }
 
 td {
-    min-height: 70px;
-    height: 100%;
+    height: 80px;
     margin: 0;
     align-items: center;
+}
+
+tr {
+    border-bottom: lightGray 1px solid;
 }
 
 .link {

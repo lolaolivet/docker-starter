@@ -11,7 +11,7 @@ security:
         your_db_provider:
             entity:
                 class: App\Entity\User
-                property: apiToken
+                property: username
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -21,9 +21,10 @@ security:
             http_basic: ~
             entry_point: form_login
             lazy: true
-            logout: ~
+            logout:
+                path: app_logout
             custom_authenticators:
-                - App\Security\ApiKeyAuthenticator
+                - App\Security\LoginFormAuthenticator
 
 #            provider: app_user_provider
 #            custom_authenticator: App\Security\LoginFormAuthenticator

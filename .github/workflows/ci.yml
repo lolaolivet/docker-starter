@@ -10,6 +10,16 @@ name: CI
             cron: '0 0 * * MON'
 
 jobs:
+    check-php-cs:
+        runs-on:  ubuntu-latest
+        steps:
+            -
+                name: 'Install PHP CS Fixer'
+                run: 'wget https://github.com/FriendsOfPHP/PHP-CS-Fixer/releases/download/v2.18.4/php-cs-fixer.phar -O php-cs-fixer'
+            -
+                name: 'Check PHP CS'
+                run: 'php php-cs-fixer fix --dry-run --allow-risky yes --diff --config=.php_cs'
+
     check-python-cs:
         runs-on: ubuntu-latest
         steps:
@@ -56,12 +66,14 @@ jobs:
             -
                 run: 'pipenv run inv start && sleep 5'
             -
+                name: 'Tests phpstan'
+                run: 'pipenv run inv phpstan'
+            -
                 run: 'pipenv run inv encore-build'
             -
                 name: 'Test the infrastructure is working'
                 run: |
                     curl --silent --fail --insecure -H "Host: via-swiss.test" https://127.0.0.1/lines | grep "Hello LinesController"
-
 #            -
 #                name: 'Test communication with DB'
 #                run: |
