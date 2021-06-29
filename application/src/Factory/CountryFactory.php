@@ -36,8 +36,8 @@ final class CountryFactory extends ModelFactory
     protected function getDefaults(): array
     {
         return [
-           'name' => self::faker()->unique()->country,
-            'flag' => self::faker()->unique()->emoji(),
+            'name' => self::faker()->unique()->randomElement(['Suisse', 'France', 'Italie', 'Allemagne']),
+            'flag' => self::faker()->unique()->randomElement(['🇮🇹', '🇩🇪', '🇨🇭', '🇫🇷']),
         ];
     }
 
@@ -45,7 +45,9 @@ final class CountryFactory extends ModelFactory
     {
         // see https://github.com/zenstruck/foundry#initialization
         return $this
-            // ->afterInstantiate(function(Country $country) {})
+             ->afterInstantiate(function(Country $country) {
+                 return new Country();
+             })
         ;
     }
 

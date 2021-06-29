@@ -31,12 +31,13 @@ class Country
 
     /**
      * @ORM\OneToMany(targetEntity=Lines::class, mappedBy="country", orphanRemoval=true)
+     * @ORM\JoinColumn(name="id", referencedColumnName="country_id")
      */
     private $lines;
 
     public function __construct()
     {
-        $this->line = new ArrayCollection();
+        $this->lines = new ArrayCollection();
     }
 
     public function getId(): ?int

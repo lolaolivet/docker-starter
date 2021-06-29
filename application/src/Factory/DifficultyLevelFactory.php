@@ -40,7 +40,7 @@ final class DifficultyLevelFactory extends ModelFactory
             'name' => self::faker()->unique()->randomElement(['Facile', 'Peu difficile', 'Assez difficile', 'Difficile', 'Très Difficile', 'Extrêmement difficile']),
             'notation_fr' => self::faker()->randomElement(['F', 'PD', 'AD', 'D', 'TD', 'ED']),
             'notation_de' => self::faker()->randomElement(['A', 'B', 'C', 'D', 'E', 'F']),
-            'color' => self::faker()->unique()->hexColor
+            'color' => self::faker()->unique()->randomElement(['#32a852', '#eb4034', '#4287f5', '#fcba03', '#e6679b', '#17619b'])
         ];
     }
 

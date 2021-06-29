@@ -9,7 +9,7 @@
     <div data-controller="hello"></div>
 
 <div>
-<table class="table table-hover">
+<table class="table-hover">
   <tbody>
    {% for line in lines %}
             <th scope="row">
@@ -23,11 +23,14 @@
                     </div>
                 {% endfor %}
                 </td>
-                {% if is_granted('ROLE_ADMIN') %}
-                    <td>
-                        <a class="link" href="{{ path('line_edit', {id: line.id}) }}"><button style="margin: 0" class="btn btn-outline-warning">Edit</button></a>
-                    </td>
-                {% endif %}
+               <td>
+                   <a class="link" href="#"><button style="margin: 0" class="btn btn-sm">{{ line.country.flag }}</button></a>
+               </td>
+               {% if is_granted('ROLE_ADMIN') %}
+                   <td style="border: purple 1px solid">
+                       <a class="link" href="{{ path('line_edit', {id: line.id}) }}">Edit</a>
+                   </td>
+               {% endif %}
             </th>
         </tr>
     {% endfor %}
