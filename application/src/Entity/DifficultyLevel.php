@@ -49,7 +49,7 @@ class DifficultyLevel
      *      message = "The color must be an hexadecimal"
      * )
      */
-    private $colour;
+    private $color;
 
     public function getId(): ?int
     {
@@ -92,14 +92,14 @@ class DifficultyLevel
         return $this;
     }
 
-    public function getColour(): ?string
+    public function getColor(): ?string
     {
-        return $this->colour;
+        return $this->color;
     }
 
-    public function setColour(string $colour): self
+    public function setColor(string $color): self
     {
-        $this->colour = $colour;
+        $this->color = $color;
 
         return $this;
     }

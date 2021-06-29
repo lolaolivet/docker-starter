@@ -49,6 +49,12 @@ class Lines
      */
     private $feedbacks;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Country::class, inversedBy="lines")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $country;
+
     public function __construct()
     {
         $this->difficulties = new ArrayCollection();
@@ -116,6 +122,18 @@ class Lines
     public function removeFeedback(Feedback $feedback): self
     {
         $this->feedbacks->removeElement($feedback);
+
+        return $this;
+    }
+
+    public function getCountry(): ?Country
+    {
+        return $this->country;
+    }
+
+    public function setCountry(?Country $country): self
+    {
+        $this->country = $country;
 
         return $this;
     }

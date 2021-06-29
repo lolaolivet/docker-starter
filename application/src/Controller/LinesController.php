@@ -27,7 +27,7 @@ class LinesController extends AbstractController
     }
 
     /**
-     * @Route("/lines", name="lines")
+     * @Route("/", name="lines")
      */
     public function index(): Response
     {
@@ -40,7 +40,7 @@ class LinesController extends AbstractController
     }
 
     /**
-     * @Route("/lines/{id}", name="line_show")
+     * @Route("/{id}", name="line_show", methods={"GET"})
      */
     public function show(Lines $line, Request $request): Response
     {
@@ -66,7 +66,7 @@ class LinesController extends AbstractController
     }
 
     /**
-     * @Route("/line/{id}", name="line_edit")
+     * @Route("/{id}", name="line_edit", methods={"UPDATE"})
      * @IsGranted("ROLE_ADMIN")
      */
     public function edit(Lines $line, Request $request): Response

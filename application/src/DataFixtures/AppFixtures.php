@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\User;
+use App\Factory\CountryFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\DifficultyLevel;
@@ -23,9 +24,10 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $d = DifficultyLevelFactory::createMany(6);
+        CountryFactory::createMany(4);
 
         for ($i = 0; $i < 20; $i++) {
-            FeedbackFactory::createOne(['line' => LinesFactory::new()->createOne(['difficulties' => DifficultyLevelFactory::randomRange(1, 5)])->object()]);
+            FeedbackFactory::createOne(['line' => LinesFactory::new()->createOne(['difficulties' => DifficultyLevelFactory::randomRange(1, 5), 'country' => CountryFactory::random()])->object()]);
         }
 
         $user_admin = new User();
